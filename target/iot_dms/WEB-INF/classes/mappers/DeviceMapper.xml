@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mrs47.dao.DeviceMapper">
+    <resultMap id="deviceMap" type="cn.mrs47.pojo.Device">
+        <id column="did" property="deviceId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result column="pid" property="productId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="devicename" property="deviceName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="devicekey" property="deviceKey" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="status" property="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result column="address" property="address" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="productname" property="productName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="updatetime" property="updateTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result column="createtime" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="selectProductIdByDeviceId" parameterType="string" resultType="string">
+    select pid from device where did=#{deviceId}
+    </select>
+    <select id="selectDeviceKeyByDeviceId" parameterType="string" resultType="string">
+    select devicekey from device where did=#{deviceId}
+    </select>
+    <select id="selectDeviceByProductId" parameterType="string" resultMap="deviceMap">
+        select * from device where pid=#{productId}
+    </select>
+    <select id="selectErrorDevice" parameterType="string" resultMap="deviceMap">
+        select * from device where pid in (select product.pid from product where uid=#{userId}) and status=0
+        order by createtime desc limit 0,5
+    </select>
+    <select id="selectAll" parameterType="map" resultMap="deviceMap">
+        select * from device where pid in (select product.pid from product where uid=#{userId})
+        <if test="deviceName != null">
+            and devicename like "%"#{deviceName}"%"
+        </if>
+        <if test="status != null">
+            and status=#{status}
+        </if>
+        order by createtime desc limit #{index},#{many}
+    </select>
+
+    <select id="selectDeviceByProductKeyAndDeviceKey" parameterType="map" resultMap="deviceMap">
+        select * from device where devicekey=#{deviceKey} and pid=(select product.pid from product where productkey=#{productKey})
+    </select>
+
+    <select id="selectCount" parameterType="string" resultType="integer">
+        select count(1) from device where pid in (select product.pid from product where uid=#{userId})
+        <if test="deviceName != null">
+            and devicename like "%"#{deviceName}"%"
+        </if>
+        <if test="status != null">
+            and status=#{status}
+        </if>
+    </select>
+    <select id="selectCountByProductId" parameterType="map" resultType="integer">
+        select count(1) from device where pid=#{productId} and #{productId} in (select product.pid from product where
+        uid=#{userId})
+        <if test="deviceName != null">
+            and devicename like "%"#{deviceName}"%"
+        </if>
+        <if test="status != null">
+            and status=#{status}
+        </if>
+    </select>
+    <select id="selectAllByProduct" parameterType="map" resultMap="deviceMap">
+        select * from device where pid=#{productId} and #{productId} in (select product.pid from product where
+        uid=#{userId})
+        <if test="deviceName != null">
+            and devicename like "%"#{deviceName}"%"
+        </if>
+        <if test="status != null">
+            and status=#{status}
+        </if>
+        order by createtime desc limit #{index},#{many}
+    </select>
+    <insert id="insertDevice" parameterType="cn.mrs47.pojo.Device">
+        insert into device
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="productId != null">
+                pid,
+            </if>
+            <if test="deviceId != null">
+                did,
+            </if>
+            <if test="deviceName != null">
+                devicename,
+            </if>
+            <if test="deviceKey != null">
+                devicekey,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="productName != null">
+                productname,
+            </if>
+            updatetime,
+            createtime
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceId != null">
+                #{deviceId,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceName != null">
+                #{deviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceKey != null">
+                #{deviceKey,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="productName != null">
+                #{productName,jdbcType=VARCHAR},
+            </if>
+            now(),
+            now()
+        </trim>
+    </insert>
+    <delete id="deleteDevice" parameterType="map">
+        delete from device where did=#{deviceId} and device.pid in (select product.pid from product where uid=#{userId})
+    </delete>
+    <update id="setAlive" parameterType="string">
+    update device set status=1,updatetime=now() where did=#{deviceId}
+    </update>
+    <update id="setDied" parameterType="list">
+        update device set status=0,updatetime=now() where did not in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+</mapper>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mrs47.dao.FileHubMapper">
+    <resultMap id="fileHubMap" type="cn.mrs47.pojo.FileHub">
+        <id column="fid" property="fileId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result column="uid" property="userId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="filename" property="fileName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="path" property="filePath" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="host" property="host" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="createtime" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <select id="selectAll" parameterType="map" resultMap="fileHubMap">
+        select * from filehub where uid=#{userId}
+        <if test="fileName != null">
+            and filename like "%"#{fileName}"%"
+        </if>
+        order by createtime desc limit #{index},#{many}
+    </select>
+    <select id="selectCount" parameterType="string" resultType="integer">
+        select count(1) from filehub where uid=#{userId}
+        <if test="fileName != null">
+            and filename like "%"#{fileName}"%"
+        </if>
+    </select>
+    <select id="selectFileByFileId" parameterType="map" resultMap="fileHubMap">
+        select * from filehub where uid=#{userId} and fid=#{fileId}
+    </select>
+    <select id="checkFileName" parameterType="map" resultType="integer">
+        select count(1) from filehub where uid=#{userId} and filename=#{fileName}
+    </select>
+    <insert id="insertFile" parameterType="cn.mrs47.pojo.FileHub" >
+        insert into filehub
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="fileId != null">
+                fid,
+            </if>
+            <if test="userId != null">
+                uid,
+            </if>
+            <if test="fileName != null">
+                filename,
+            </if>
+            <if test="filePath != null">
+                path,
+            </if>
+            <if test="host != null">
+                host,
+            </if>
+            createtime
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="fileId != null">
+                #{fileId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="fileName != null">
+                #{fileName,jdbcType=VARCHAR},
+            </if>
+            <if test="filePath != null">
+                #{filePath,jdbcType=VARCHAR},
+            </if>
+            <if test="host != null">
+                #{host,jdbcType=VARCHAR},
+            </if>
+            now()
+        </trim>
+    </insert>
+    <delete id="removeFile" parameterType="map">
+        delete from filehub where fid=#{fileId} and uid=#{userId}
+    </delete>
+</mapper>

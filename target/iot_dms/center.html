@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>控制台</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet">
+    <!-- Google fonts - Popppins for copy-->
+    <link rel="stylesheet" href="fonts/iconfont.css">
+    <!-- orion icons-->
+    <link rel="stylesheet" href="css/orionicons.css">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Favicon-->
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1557432_f1au4sax4zc.css">
+    <link rel="shortcut icon" href="img/favicon.png">
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper.js/umd/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/jquery.cookie/jquery.cookie.js"></script>
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="js/js.cookie.min.js"></script>
+    <script src="js/front.js"></script>
+</head>
+
+<body>
+<!-- navbar-->
+<header class="header">
+    <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow"><a href="#"
+                                                                      class="sidebar-toggler text-gray-500 mr-4 mr-lg-5 lead"><i
+            class="fas fa-align-left"></i></a><a
+            href="center.html" class="navbar-brand font-weight-bold text-uppercase text-base">监控中心</a>
+        <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
+            <li class="nav-item">
+                <form id="searchForm" class="ml-auto d-none d-lg-block">
+                    <div class="form-group position-relative mb-0">
+                        <button type="submit" style="top: -3px; left: 0;"
+                                class="position-absolute bg-white border-0 p-0"><i
+                                class="o-search-magnify-1 text-gray text-lg"></i></button>
+                        <input type="search" placeholder="搜索 ..."
+                               class="form-control form-control-sm border-0 no-shadow pl-4">
+                    </div>
+                </form>
+            </li>
+            <li class="nav-item dropdown mr-3"><a id="notifications" href="http://example.com" data-toggle="dropdown"
+                                                  aria-haspopup="true" aria-expanded="false"
+                                                  class="nav-link dropdown-toggle text-gray-400 px-1"><i
+                    class="fa fa-bell"></i><span class="notification-icon"></span></a>
+                <div aria-labelledby="notifications" class="dropdown-menu"><a href="#" class="dropdown-item">
+
+                    <div class="d-flex align-items-center">
+                        <div class="icon icon-sm bg-green text-white"><i class="fas fa-envelope"></i></div>
+                        <div class="text ml-2">
+                            <p class="mb-0">你有6条新消息</p>
+                        </div>
+                    </div>
+                </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown ml-auto"><a id="userInfo" href="http://example.com" data-toggle="dropdown"
+                                                     aria-haspopup="true" aria-expanded="false"
+                                                     class="nav-link dropdown-toggle"><img src="img/avatar-6.jpg"
+                                                                                           alt="Jason Doe"
+                                                                                           style="max-width: 2.5rem;"
+                                                                                           class="img-fluid rounded-circle shadow"></a>
+                <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong
+                        class="d-block text-uppercase headings-font-family" id="user">用户名</strong></a>
+                    <div class="dropdown-divider"></div>
+                    <a href="personalcenter.html" class="dropdown-item">个人中心</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item" onclick="logout()">退出</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<div class="d-flex align-items-stretch">
+    <div id="sidebar" class="sidebar py-3">
+        <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">MAIN
+        </div>
+        <ul class="sidebar-menu list-unstyled">
+            <li class="sidebar-list-item"><a href="center.html" class="sidebar-link text-muted active"><i
+                    class="o-home-1 mr-3 text-gray"></i><span>监控中心</span></a></li>
+            <li class="sidebar-list-item"><a href="productManage.html" class="sidebar-link text-muted "><i
+                    class="o-survey-1 mr-3 text-gray"></i><span>产品管理</span></a></li>
+            <li class="sidebar-list-item"><a href="deviceManage.html" class="sidebar-link text-muted "><i
+                    class="o-imac-screen-1 mr-3 text-gray"></i><span>设备管理</span></a></li>
+            <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#pages" aria-expanded="false"
+                                             aria-controls="pages" class="sidebar-link text-muted"><i
+                    class="o-wireframe-1 mr-3 text-gray"></i><span>服务</span></a>
+                <div id="pages" class="collapse">
+                    <ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
+                        <li class="sidebar-list-item"><a href="filehub.html" class="sidebar-link text-muted pl-lg-5"><i
+                                class="o-survey-1 mr-3 text-gray"></i><span>文件仓库</span></a></li>
+                        <li class="sidebar-list-item"><a href="softhub.html" class="sidebar-link text-muted pl-lg-5"><i
+                                class="o-imac-screen-1 mr-3 text-gray"></i><span>软件仓库</span></a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="page-holder w-100 d-flex flex-wrap">
+        <div class="container-fluid px-xl-5">
+            <section class="py-5">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
+                        <div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
+                            <div class="flex-grow-1 d-flex align-items-center">
+                                <div class="dot mr-3 bg-violet"></div>
+                                <div class="text">
+                                    <h6 class="mb-0">已部署</h6><span class="text-gray" id="totalDevice"></span>
+                                </div>
+                            </div>
+                            <div class="icon text-white bg-violet"><i class="fas fa-server"></i></div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
+                        <div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
+                            <div class="flex-grow-1 d-flex align-items-center">
+                                <div class="dot mr-3 bg-green"></div>
+                                <div class="text">
+                                    <h6 class="mb-0">在线</h6><span class="text-gray" id="inlineDevice"></span>
+                                </div>
+                            </div>
+                            <div class="icon text-white bg-green"><i class="far fa-clipboard"></i></div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
+                        <div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
+                            <div class="flex-grow-1 d-flex align-items-center">
+                                <div class="dot mr-3 bg-red"></div>
+                                <div class="text">
+                                    <h6 class="mb-0">故障</h6><span class="text-gray" id="offlineDevice"></span>
+                                </div>
+                            </div>
+                            <div class="icon text-white bg-red"><i class="fas fa-receipt"></i></div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
+                        <div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
+                            <div class="flex-grow-1 d-flex align-items-center">
+                                <!-- <div class="dot mr-3 bg-blue"></div> -->
+                                <div class="ml-3  text">
+                                    <h6 class="mb-1">购买资源包</h6>
+                                </div>
+                            </div>
+                            <button class="icon text-white bg-blue mr-3" style="border: 0 !important;"
+                                    data-toggle="modal"
+                                    data-target="#buy"><i class="fa fa-dolly-flatbed"></i></button>
+                            <!-- 模态框（Modal） -->
+                            <div class="modal fade" id="buy" tabindex="-1" data-backdrop="static" role="dialog"
+                                 aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="text-base">购买资源包</h4>
+                                        </div>
+                                        <form id="payForm">
+                                            <div class="modal-body">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-lg-5 form-control-label py-2">请输入购买资源包的数量：</label>
+                                                    <div class="col-lg-6">
+                                                        <div class="input-group">
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-primary" type="button" id="reduce">-</button>
+                                                            </span>
+                                                            <input type="text" class="form-control" id="number" value="10">
+                                                            <span class="input-group-btn">
+                                                               <button class="btn btn-primary" type="button" id="addNumber">+</button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="modal-footer" id="payFooter">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                            </button>
+                                            <button type="button" id="subPay" class="btn btn-primary">
+                                                支付
+                                            </button>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+            <section>
+                <div class="row col-12">
+                    <div class="card col-xl-5 col-lg-5 mb-4 m-2">
+                        <div class="card-body">
+                            <div class="row align-items-center flex-row">
+                                <div class="col-lg-5">
+                                    <h2 class="mb-0 d-flex align-items-center"><span id="canDeploy">*</span><span
+                                            class="dot bg-green d-inline-block ml-3"></span></h2><span
+                                        class="text-muted text-uppercase small">可部署</span>
+                                    <hr>
+                                    <small class="text-muted" id="surplusDeploy">剩余可部署</small>
+                                </div>
+                                <div class="col-lg-7 ">
+                                    <canvas id="pieChartHome1"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card col-xl-5 col-lg-5 mb-4 m-2">
+                        <div class="card-body">
+                            <div class="row align-items-center flex-row">
+                                <div class="col-lg-5">
+                                    <h2 class="mb-0 d-flex align-items-center" id="inlinePercentage"><span
+                                            class="dot bg-blue d-inline-block ml-3"></span></h2><span
+                                        class="text-muted text-uppercase small">在线设备</span>
+                                    <hr>
+                                    <small class="text-muted">在线设备/总部署*% 即设备在线率</small>
+                                </div>
+                                <div class="col-lg-7">
+                                    <canvas id="pieChartHome2"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="py-5">
+                <div class="row text-dark">
+                    <div class="col-lg-4 mb-4 mb-lg-0">
+                        <div class="card rounded credit-card bg-hover-gradient-violet">
+                            <button type="button" style="border: 0 !important;" data-toggle="modal"
+                                    data-target="#reboot" id="onReboot">
+                                <div class="content d-flex flex-column justify-content-between p-4">
+                                    <h1 class="mb-5"><i class="fas fa-redo"></i></h1>
+                                    <div class="d-flex justify-content-between align-items-end pt-3">
+                                        <div class="text-uppercase">
+                                            <div class="font-weight-bold d-block">一键重启</div>
+                                            <small class="text-gray">将重启所有在线设备</small>
+                                        </div>
+                                        <h4 class="mb-0 inlineDevice"></h4>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                        <!-- 模态框（Modal） -->
+                        <div class="modal fade" id="reboot" tabindex="-1" data-backdrop="static" role="dialog"
+                             aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="text-base">选择要重启的产品</h4>
+                                    </div>
+                                    <form id="rebootForm">
+                                        <div class="modal-body">
+                                            <div class="form-group row">
+                                                <label class="col-md-3 form-control-label py-2">产品名：</label>
+                                                <div class="col-md-9 select col-lg-6">
+                                                    <select id="rebootProductName" class="form-control">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="line"></div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 form-control-label py-2">账号密码：</label>
+                                                <div class="col-sm-9">
+                                                    <input type="password" id="rebootPassword" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                        </button>
+                                        <button type="button" id="rebootSub" class="btn btn-primary">
+                                            确定
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-4 mb-lg-0">
+                        <div class="card rounded credit-card bg-hover-gradient-green ">
+                            <button type="button" style="border: 0 !important;" data-toggle="modal"
+                                    data-target="#upgrade" id="onUpdate">
+                                <div class="content d-flex flex-column justify-content-between p-4">
+                                    <h1 class="mb-5"><i class="far fa-arrow-alt-circle-up"></i></h1>
+                                    <div class="d-flex justify-content-between align-items-end pt-3">
+                                        <div class="text-uppercase">
+                                            <div class="font-weight-bold d-block">一键升级</div>
+                                            <small class="text-gray">将升级所有在线设备</small>
+                                        </div>
+                                        <h4 class="mb-0 inlineDevice"></h4>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                        <!-- 模态框（Modal） -->
+                        <div class="modal fade" id="upgrade" tabindex="-1" data-backdrop="static" role="dialog"
+                             aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="text-base">选择要升级的产品</h4>
+                                    </div>
+                                    <form id="updateForm">
+                                        <div class="modal-body">
+                                            <div class="form-group row">
+                                                <label class="col-md-3 form-control-label py-2">产品名：</label>
+                                                <div class="col-md-9 select col-lg-6">
+                                                    <select id="updateProductName" class="form-control">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="line"></div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 form-control-label py-2">软件版本：</label>
+                                                <div class="col-md-9 select col-lg-6">
+                                                    <select id="updateProductSoft" class="form-control">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="line"></div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 form-control-label py-2">账号密码：</label>
+                                                <div class="col-sm-9">
+                                                    <input type="password" id="updatePassword" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                        </button>
+                                        <button type="button" id="updateSub" class="btn btn-primary">
+                                            提交更改
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-4 mb-lg-0">
+                        <div class="card rounded credit-card bg-hover-gradient-blue">
+                            <button type="button" style="border: 0 !important;" data-toggle="modal"
+                                    data-target="#upload" id="onUpload">
+                                <div class="content d-flex flex-column justify-content-between p-4">
+                                    <h1 class="mb-5"><i class="fas fa-upload"></i></h1>
+                                    <div class="d-flex justify-content-between align-items-end pt-3">
+                                        <div class="text-uppercase">
+                                            <div class="font-weight-bold d-block">上传文件</div>
+                                            <small class="text-gray">上传文件到所有在线设备</small>
+                                        </div>
+                                        <h4 class="mb-0 inlineDevice"></h4>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                        <!-- 模态框（Modal） -->
+                        <div class="modal fade" id="upload" tabindex="-1" data-backdrop="static" role="dialog"
+                             aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="text-base" id="myModalLabel py-2">选择产品</h4>
+                                    </div>
+                                    <form id="uploadForm">
+                                        <div class="modal-body">
+                                            <div class="form-group row">
+                                                <label class="col-md-3 form-control-label py-2">产品名：</label>
+                                                <div class="col-md-9 select col-lg-6">
+                                                    <select id="uploadProductName" class="form-control">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="line"></div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 form-control-label py-2">文件路径：</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" id="uploadFileId"
+                                                           placeholder="填写文件仓库的“FilePath”" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="line"></div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 form-control-label py-2">账号密码：</label>
+                                                <div class="col-sm-9">
+                                                    <input type="password" id="uploadPassword" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                        </button>
+                                        <button type="button" id="uploadSub" class="btn btn-primary">
+                                            提交更改
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="py-5">
+                <div class="row" id=>
+                    <h2 class="col-lg-12 card bg-hover-gradient-primary mb-4 text-center text-primary text-red">
+                        *最新故障*</h2>
+                    <div id="errorDevice" class="col-12">
+                    </div>
+                </div>
+            </section>
+        </div>
+        <footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-left text-primary">
+                        <!-- 版权信息 -->
+                        <p class="mb-2 mb-md-0"></p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+<script>
+    $(function () {
+        var obj = $.cookie("USER");
+        if (isEmpty(obj)) {
+            $(location).attr('href', 'index.html');
+        } else {
+            var userInfo = $.parseJSON(obj);
+            if (!isEmpty(userInfo)){
+                $("#user").html(userInfo.data.userName);
+            }
+        }
+        getCenterInfo();
+        setInterval(function () {
+            getCenterInfo()
+        }, 30000);
+
+        $("#onReboot").click(function () {
+            $.ajax({
+                type: "post",
+                url: "product/selectAll.do",
+                success: function (data) {
+                    var pageInfo = $.parseJSON(data);
+                    $("#rebootProductName").html("");
+                    if (pageInfo.status == 1) {
+                        for (i = 0; i < pageInfo.data.data.length; i++) {
+                            if (!isEmpty(pageInfo.data.data[i])) {
+                                $("#rebootProductName").append("<option value=\"" + pageInfo.data.data[i].productId + "\" >" + pageInfo.data.data[i].productName + "</option>");
+                            }
+                        }
+                    } else if (obj.status == 10) {
+                        $(location).attr('href', 'index.html');
+                    }
+                },
+                dataType: "text"
+            });
+        });
+
+        $("#onUpdate").click(function () {
+            $.ajax({
+                type: "post",
+                url: "product/selectAll.do",
+                success: function (data) {
+                    var pageInfo = $.parseJSON(data);
+                    $("#updateProductName").html("");
+                    if (pageInfo.status == 1) {
+                        for (i = 0; i < pageInfo.data.data.length; i++) {
+                            if (!isEmpty(pageInfo.data.data[i])) {
+                                $("#updateProductName").append("<option value=\"" + pageInfo.data.data[i].productId + "\" >" + pageInfo.data.data[i].productName + "</option>");
+                            }
+                        }
+                    } else if (obj.status == 10) {
+                        $(location).attr('href', 'index.html');
+                    }
+                },
+                dataType: "text"
+            });
+        });
+
+        $("#updateProductName").change(function () {
+            var productId = $("#updateProductName").val();
+            $.ajax({
+                type: "post",
+                url: "product/selectSoft.do",
+                data: {"productId": productId},
+                success: function (data) {
+                    var obj = $.parseJSON(data);
+                    if (!isEmpty(obj) || obj.status == 1) {
+                        $("#updateProductSoft").html("");
+                        for (i = 0; i < obj.data.length; i++) {
+                            if (!isEmpty(obj.data[i])) {
+                                $("#updateProductSoft").append("<option value=\"" + obj.data[i].softId + "\" >" + obj.data[i].softName + " " + obj.data[i].version + "</option>");
+                            }
+                        }
+                    } else if (obj.status == 10) {
+                        $(location).attr('href', 'index.html');
+                    }
+                },
+                dataType: "text"
+            });
+        });
+
+        $("#onUpload").click(function () {
+            $.ajax({
+                type: "post",
+                url: "product/selectAll.do",
+                success: function (data) {
+                    var pageInfo = $.parseJSON(data);
+                    $("#uploadProductName").html("");
+                    if (pageInfo.status == 1) {
+                        for (i = 0; i < pageInfo.data.data.length; i++) {
+                            if (!isEmpty(pageInfo.data.data[i])) {
+                                $("#uploadProductName").append("<option value=\"" + pageInfo.data.data[i].productId + "\" >" + pageInfo.data.data[i].productName + "</option>");
+                            }
+                        }
+                    } else if (obj.status == 10) {
+                        $(location).attr('href', 'index.html');
+                    }
+                },
+                dataType: "text"
+            });
+        });
+
+        $("#updateSub").click(function () {
+            var productId = $("#updateProductName").val();
+            var softId = $("#updateProductSoft").val();
+            var passwd = $("#updatePassword").val();
+            if (isEmpty(passwd)) {
+                alert("请填写密码!");
+            } else if (isEmpty(softId)) {
+                alert("请选择软件!");
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: "download/pressInSoft.do",
+                    data: {"softId": softId, "productId": productId, "password": passwd},
+                    success: function (data) {
+                        var obj = $.parseJSON(data);
+                        if (!isEmpty(obj) && obj.status == 1) {
+                            $("#uploadSoft").prop("disabled", true);
+                            $("#updateForm").html("<div class='modal-body m-auto col-12'><h2 class='m-auto'>" + obj.msg + "<i class='iconfont iconchenggong1 ml-2' style='color:green'></div></i></h2>");
+                        } else if (!isEmpty(obj) && obj.status == 0) {
+                            $("#uploadSoft").prop("disabled", true);
+                            $("#updateForm").html("<div class='modal-body m-auto col-12'><h2 class='m-auto'>" + obj.msg + "<i class='iconfont iconcha m-auto' style='color:red'></i></h2>");
+                        } else if (!isEmpty(obj) && obj.status == 10) {
+                            $(location).attr('href', 'index.html');
+                        }
+                    },
+                    dataType: "text"
+                });
+            }
+        });
+
+        $("#uploadSub").click(function () {
+            var productId = $("#uploadProductName").val();
+            var fileId = $("#uploadFileId").val();
+            var passwd = $("#uploadPassword").val();
+            if (isEmpty(passwd)) {
+                alert("请填写密码!");
+            } else if (isEmpty(fileId)) {
+                alert("请填写文件路径!");
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: "download/pressInSoft.do",
+                    data: {"fileId": fileId, "productId": productId, "password": passwd},
+                    success: function (data) {
+                        var obj = $.parseJSON(data);
+                        if (!isEmpty(obj) && obj.status == 1) {
+                            $("#uploadSub").prop("disabled", true);
+                            $("#uploadForm").html("<div class='modal-body m-auto col-12'><h2 class='m-auto'>" + obj.msg + "<i class='iconfont iconchenggong1 ml-2' style='color:green'></div></i></h2>");
+                        } else if (!isEmpty(obj) && obj.status == 0) {
+                            $("#uploadSub").prop("disabled", true);
+                            $("#uploadForm").html("<div class='modal-body m-auto col-12'><h2 class='m-auto'>" + obj.msg + "<i class='iconfont iconcha m-auto' style='color:red'></i></h2>");
+                        } else if (!isEmpty(obj) && obj.status == 10) {
+                            $(location).attr('href', 'index.html');
+                        }
+                    },
+                    dataType: "text"
+                });
+            }
+        });
+
+        $("#reduce").click(function () {
+            if (parseInt($("#number").val())>1){
+                $("#number").val(parseInt($("#number").val())-1);
+            }
+        });
+
+        $("#addNumber").click(function () {
+            if (parseInt($("#number").val())<100000000){
+                $("#number").val(parseInt($("#number").val())+1);
+            }
+
+        });
+
+
+
+        $("#subPay").click(function () {
+            var number = $("#number").val();
+            if (parseInt($("#number").val())<1){
+                alert("不可小于1");
+                return;
+            }
+            if (parseInt($("#number").val())>100000000){
+                alert("不可大于100000000");
+                return;
+            }
+            $("#subPay").prop("disabled", true);
+            if (!isEmpty(number)){
+                $.ajax({
+                    type: "post",
+                    url: "pay/subOrder.do",
+                    data:{"goodsId":"35e127d7d9aa4eba8cf489aa00a31f75","number":number},
+                    success: function (data) {
+                        var obj = $.parseJSON(data);
+                        if (!isEmpty(obj) && obj.status==1){
+                        $("#payForm").html(" <div class='col-12 center-block m-auto'><div class='center-block m-auto' ><h3 class='col-5'>请扫码支付</h3></div></div> <div class=\"form-group row m-auto\"><div class='m-auto center-block'><img src='"+obj.data+"'/></div></div>");
+                        $("#payFooter").html("<button type=\"button\" class=\"btn btn-primary\" data-dismiss=\"modal\" id='subPaid'>已支付</button>");
+                            $("#subPaid").click(function () {
+                                location.reload();
+                            });
+                        }else if (!isEmpty(obj) && obj.status==10){
+                            $(location).attr('href','index.html');
+                        }else if (!isEmpty(obj) && obj.status==0){
+                            $("#payForm").html("<p>"+obj.msg+"</p>");
+                        }
+                    },
+                    dataType: "text"
+                });
+            }
+        })
+
+    });
+
+    function getCenterInfo() {
+        $.ajax({
+            type: "post",
+            url: "device/selectCenterDevice.do",
+            success: function (data) {
+                var obj = $.parseJSON(data);
+                if (obj.status == 1) {
+                    $("#totalDevice").html(obj.data.totalDevice + " 台");
+                    $("#inlineDevice").html(obj.data.inlineDevice + " 台");
+                    $("#offlineDevice").html(obj.data.offline + " 台");
+                    $("#canDeploy").html(obj.data.canDeploy + " 台");
+                    $("#inlinePercentage").html("<span>" + parseInt(obj.data.inlineDevice / obj.data.totalDevice * 100) + "%</span>");
+                    $(".inlineDevice").html(obj.data.inlineDevice + " 台");
+
+                    $("#errorDevice").html("");
+                    for (i = 0; i <= 5; i++) {
+                        if (!isEmpty(obj.data.errorDevice[i])) {
+                            $("#errorDevice").append("<div class=\"col-lg-12\">\n" +
+                                "              <a href=\"deviceinfo.html?deviceId=" + obj.data.errorDevice[i].deviceId + "\" class=\"message card px-5 py-3 mb-4 bg-hover-gradient-primary no-anchor-style\">\n" +
+                                "                <div class=\"row\">\n" +
+                                "                  <div class=\"col-lg-5 d-flex align-items-center flex-column flex-lg-row text-center text-md-left\">\n" +
+                                "                    <strong class=\"h5 mb-0\">" + (i + 1) + "</strong><img src=\"img/error.png\" alt=\"...\" style=\"max-width: 2rem\"\n" +
+                                "                      class=\"rounded-circle mx-3 my-2 my-lg-0\">\n" +
+                                "                    <h6 class=\"mb-0\">" + obj.data.errorDevice[i].deviceId + "</h6>\n" +
+                                "                  </div>\n" +
+                                "                  <div class=\"col-lg-7 d-flex align-items-center flex-column flex-lg-row text-center text-md-left\">\n" +
+                                "                    <div class=\"bg-gray-100 roundy px-4 py-1 mr-0 mr-lg-3 mt-2 mt-lg-0 text-dark exclode\">" + obj.data.errorDevice[i].address + "</div>\n" +
+                                "                    <p class=\"mb-0 mt-3 mt-lg-0\">设备名：" + obj.data.errorDevice[i].deviceName + ", 最后一次更新：" + obj.data.errorDevice[i].updateTime + "</p>\n" +
+                                "                  </div>\n" +
+                                "                </div>\n" +
+                                "              </a>\n" +
+                                "            </div>");
+                        }
+                    }
+                    var violet = '#DF99CA',
+                        red = '#F0404C',
+                        green = '#7CF29C',
+                        blue = '#4680ff';
+                    // ------------------------------------------------------- //
+                    // 可部署
+                    // ------------------------------------------------------ //
+                    var PIECHART = $('#pieChartHome1');
+                    var myPieChart = new Chart(PIECHART, {
+                        type: 'doughnut',
+                        options: {
+                            cutoutPercentage: 90,
+                            legend: {
+                                display: false
+                            }
+                        },
+                        data: {
+                            labels: [
+                                "已部署",
+                                "剩余可部署"
+                            ],
+                            datasets: [{
+                                data: [obj.data.canDeploy, obj.data.totalDevice],
+                                borderWidth: [0, 0],
+                                backgroundColor: [
+                                    green,
+                                    "#eee",
+
+
+                                ],
+                                hoverBackgroundColor: [
+                                    green,
+                                    "#eee",
+                                ]
+                            }]
+                        }
+                    });
+                    // ------------------------------------------------------- //
+                    // 在线率
+                    // ------------------------------------------------------ //
+                    var PIECHART = $('#pieChartHome2');
+                    var myPieChart = new Chart(PIECHART, {
+                        type: 'doughnut',
+                        options: {
+                            cutoutPercentage: 90,
+                            legend: {
+                                display: false
+                            }
+                        },
+                        data: {
+                            labels: [
+                                "在线",
+                                "下线"
+                            ],
+                            datasets: [{
+                                data: [obj.data.inlineDevice, obj.data.offline],
+                                borderWidth: [0, 0],
+                                backgroundColor: [
+                                    blue,
+                                    "#eee"
+                                ],
+                                hoverBackgroundColor: [
+                                    blue,
+                                    "#eee"
+                                ]
+                            }]
+                        }
+                    });
+                } else if (obj.status == 10) {
+                    $(location).attr('href', 'index.html');
+                }
+            },
+            dataType: "text"
+        })
+    }
+
+    function isEmpty(obj) {
+        if (typeof obj == "undefined" || obj == null || obj == "") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function logout() {
+        $.ajax({
+            type: "post",
+            url: "user/logout.do",
+            success: function (data) {
+                var obj = $.parseJSON(data)
+                if (!isEmpty(obj) && obj.status == 1) {
+                    $.cookie("USER", null);
+                    $(location).attr('href', 'index.html');
+                }
+            },
+            dataType: "text"
+        });
+        $.cookie("USER", null);
+        $(location).attr('href', 'index.html');
+    }
+</script>
+</body>
+
+</html>

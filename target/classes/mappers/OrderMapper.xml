@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mrs47.dao.OrderMapper">
+    <resultMap id="orderMap" type="cn.mrs47.pojo.Order">
+        <id column="oid" property="orderId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="uid" property="userId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="trade_no" property="tradeNo" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="buyer_id" property="buyerId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="gid" property="goodsId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result column="status" property="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result column="balance" property="balance" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result column="amount" property="amount" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+        <result column="paytime" property="payTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result column="createtime" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+
+    <select id="selectByOrderNo" parameterType="string" resultMap="orderMap">
+        select * from orders where oid=#{orderNo}
+    </select>
+
+
+    <insert id="insertOrder" parameterType="cn.mrs47.pojo.Order" >
+        insert into orders
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="orderId != null">
+                oid,
+            </if>
+            <if test="userId != null">
+                uid,
+            </if>
+            <if test="tradeNo != null">
+                trade_no,
+            </if>
+            <if test="buyerId != null">
+                buyer_id,
+            </if>
+            <if test="goodsId != null">
+                gid,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="balance != null">
+                balance,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="payTime != null">
+                paytime,
+            </if>
+            createtime
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeNo != null">
+                #{tradeNo,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerId != null">
+                #{buyerId,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="balance != null">
+                #{balance,jdbcType=INTEGER},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="payTime != null">
+                #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            now()
+        </trim>
+    </insert>
+    <update id="updateOrderByOrderId" parameterType="cn.mrs47.pojo.Order">
+        update orders set paytime=#{order.payTime,jdbcType=TIMESTAMP}, trade_no=#{order.tradeNo,jdbcType=VARCHAR},buyer_id=#{order.buyerId,jdbcType=VARCHAR},status=#{order.status,jdbcType=INTEGER} where oid=#{order.orderId}
+    </update>
+
+</mapper>

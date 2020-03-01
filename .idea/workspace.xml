@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="iot_dms:war" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6c931543-4dfd-4828-9275-28c4c5d61f27" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Jsp File" />
+        <option value="spring-beans.schema" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="C:/apache-maven-3.6.1" />
+        <option name="userSettingsFile" value="C:\apache-maven-3.6.1\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1SyFxwfRDUAsIsROKmMd9EXACQU" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Problems" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.3137931" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="cn.mrs47.dao" />
+      <recent name="mappers" />
+      <recent name="cn.mrs47.util" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\code\IdeaProjects\iot_dms\src\main\java\cn\mrs47\dao" />
+      <recent name="E:\code\IdeaProjects\iot_dms\src\main\resources\mappers" />
+      <recent name="E:\code\IdeaProjects\iot_dms\src\main\java\cn\mrs47\service\impl" />
+      <recent name="E:\code\IdeaProjects\iot_dms\src\main\resources" />
+      <recent name="E:\code\IdeaProjects\iot_dms\src\main\webapp\WEB-INF\lib" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Tomcat8" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.5.421" ALTERNATIVE_JRE_ENABLED="false">
+      <option name="BROWSER_ID" value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment>
+        <artifact name="iot_dms:war">
+          <settings>
+            <option name="CONTEXT_PATH" value="/iot_dms_war" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="Unnamed_iot_dms_2" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="49172" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="iot_dms:war" />
+        </option>
+      </method>
+    </configuration>
+  </component>
+  <component name="SpringGeneralSettings">
+    <option name="allowAutoConfigurationMode" value="true" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6c931543-4dfd-4828-9275-28c4c5d61f27" name="Default Changelist" comment="" />
+      <created>1572528178740</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1572528178740</updated>
+      <workItem from="1572528180561" duration="2478000" />
+      <workItem from="1572596653546" duration="1717000" />
+      <workItem from="1572689343277" duration="7091000" />
+      <workItem from="1572780372538" duration="8573000" />
+      <workItem from="1572789032567" duration="1479000" />
+      <workItem from="1572790533201" duration="1826000" />
+      <workItem from="1572792380611" duration="4114000" />
+      <workItem from="1572834966647" duration="894000" />
+      <workItem from="1572835885203" duration="587000" />
+      <workItem from="1572859260484" duration="151000" />
+      <workItem from="1572939792577" duration="357000" />
+      <workItem from="1572947515178" duration="1500000" />
+      <workItem from="1572951054834" duration="8353000" />
+      <workItem from="1572959440720" duration="1702000" />
+      <workItem from="1573008538906" duration="2682000" />
+      <workItem from="1573013527831" duration="3846000" />
+      <workItem from="1573040486417" duration="1167000" />
+      <workItem from="1573471127517" duration="7204000" />
+      <workItem from="1573478824155" duration="2324000" />
+      <workItem from="1573525226389" duration="2359000" />
+      <workItem from="1573557792155" duration="6085000" />
+      <workItem from="1573697770144" duration="1591000" />
+      <workItem from="1573900568443" duration="16208000" />
+      <workItem from="1573960402218" duration="19270000" />
+      <workItem from="1574161397383" duration="2892000" />
+      <workItem from="1574247570788" duration="12802000" />
+      <workItem from="1574334873090" duration="9999000" />
+      <workItem from="1574483382522" duration="21689000" />
+      <workItem from="1574577341518" duration="8722000" />
+      <workItem from="1574586250587" duration="570000" />
+      <workItem from="1574587086377" duration="14360000" />
+      <workItem from="1574651367207" duration="13964000" />
+      <workItem from="1574679542809" duration="906000" />
+      <workItem from="1574995240285" duration="600000" />
+      <workItem from="1575015413566" duration="363000" />
+      <workItem from="1575297337014" duration="153000" />
+      <workItem from="1575464727282" duration="243000" />
+      <workItem from="1575533393812" duration="119000" />
+      <workItem from="1575533714562" duration="74000" />
+      <workItem from="1575864666347" duration="27266000" />
+      <workItem from="1575947438902" duration="7759000" />
+      <workItem from="1575956052023" duration="19511000" />
+      <workItem from="1576033311010" duration="40590000" />
+      <workItem from="1576122498176" duration="27955000" />
+      <workItem from="1576206286991" duration="674000" />
+      <workItem from="1576219847476" duration="20107000" />
+      <workItem from="1576381805044" duration="10564000" />
+      <workItem from="1576400146435" duration="16311000" />
+      <workItem from="1576463864797" duration="27188000" />
+      <workItem from="1576549428892" duration="19488000" />
+      <workItem from="1576580579364" duration="14506000" />
+      <workItem from="1576595412756" duration="761000" />
+      <workItem from="1576636846859" duration="34248000" />
+      <workItem from="1576722685360" duration="1562000" />
+      <workItem from="1576753302918" duration="599000" />
+      <workItem from="1576765652746" duration="528000" />
+      <workItem from="1576766209147" duration="948000" />
+      <workItem from="1576836722498" duration="1297000" />
+      <workItem from="1576839331551" duration="635000" />
+      <workItem from="1576840040201" duration="177000" />
+      <workItem from="1576926308503" duration="1211000" />
+      <workItem from="1576995471860" duration="25876000" />
+      <workItem from="1577067096203" duration="15762000" />
+      <workItem from="1577158998688" duration="21405000" />
+      <workItem from="1577245122313" duration="5654000" />
+      <workItem from="1577719867049" duration="677000" />
+      <workItem from="1577771582682" duration="2677000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+</project>

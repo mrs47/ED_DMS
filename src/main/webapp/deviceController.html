@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="fonts/iconfont.css">
+    <!-- orion icons-->
+    <link rel="stylesheet" href="css/orionicons.css">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/favicon.png?3">
+
+    <!-- JavaScript files-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper.js/umd/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/jquery.cookie/jquery.cookie.js"></script>
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="js/js.cookie.min.js"></script>
+    <script src="js/front.js"></script>
+</head>
+
+<body>
+<!-- navbar-->
+<header class="header">
+    <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow"><a href="#"
+                                                                      class="sidebar-toggler text-gray-500 mr-4 mr-lg-5 lead"><i
+            class="fas fa-align-left"></i></a><a
+            href="center.html" class="navbar-brand font-weight-bold text-uppercase text-base">GPIO控制</a>
+        <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
+            <li class="nav-item">
+                <form id="searchForm" class="ml-auto d-none d-lg-block">
+                    <div class="form-group position-relative mb-0">
+                        <button type="submit" style="top: -3px; left: 0;"
+                                class="position-absolute bg-white border-0 p-0"><i
+                                class="o-search-magnify-1 text-gray text-lg"></i></button>
+                        <input type="search" placeholder="搜索 ..."
+                               class="form-control form-control-sm border-0 no-shadow pl-4">
+                    </div>
+                </form>
+            </li>
+            <li class="nav-item dropdown mr-3"><a id="notifications" href="http://example.com" data-toggle="dropdown"
+                                                  aria-haspopup="true" aria-expanded="false"
+                                                  class="nav-link dropdown-toggle text-gray-400 px-1"><i
+                    class="fa fa-bell"></i><span class="notification-icon"></span></a>
+                <div aria-labelledby="notifications" class="dropdown-menu"><a href="#" class="dropdown-item">
+
+                    <div class="d-flex align-items-center">
+                        <div class="icon icon-sm bg-green text-white"><i class="fas fa-envelope"></i></div>
+                        <div class="text ml-2">
+                            <p class="mb-0">你有6条信息</p>
+                        </div>
+                    </div>
+                </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown ml-auto"><a id="userInfo" href="http://example.com" data-toggle="dropdown"
+                                                     aria-haspopup="true" aria-expanded="false"
+                                                     class="nav-link dropdown-toggle"><img src="img/avatar-6.jpg"
+                                                                                           alt="Jason Doe"
+                                                                                           style="max-width: 2.5rem;"
+                                                                                           class="img-fluid rounded-circle shadow"></a>
+                <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong
+                        class="d-block text-uppercase headings-font-family" id="user">用户名</strong></a>
+                    <div class="dropdown-divider"></div>
+                    <a href="personalcenter.html" class="dropdown-item">个人中心</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" onclick="logout()" class="dropdown-item">退出</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+<div class="d-flex align-items-stretch">
+    <div id="sidebar" class="sidebar py-3">
+        <ul class="sidebar-menu list-unstyled">
+            <li class="sidebar-list-item"><a href="center.html" class="sidebar-link text-muted"><i
+                    class="o-home-1 mr-3 text-gray"></i><span>监控中心</span></a></li>
+            <li class="sidebar-list-item" id="deviceInfo"><a href="deviceinfo.html" class="sidebar-link text-muted">
+                <i class="fas fa-desktop mr-3 text-gray"></i><span>详情</span></a></li>
+        </ul>
+        <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">扩展功能
+        </div>
+        <ul class="sidebar-menu list-unstyled">
+            <li class="sidebar-list-item" id="deviceCtrl"><a href="#" class="sidebar-link text-muted"><i
+                    class="o-imac-screen-1 mr-3 text-gray"></i><span>设备控制</span></a></li>
+        </ul>
+
+        <!-- 文件模态框（Modal） -->
+        <div class="modal fade" id="gpioInit" tabindex="-1" data-backdrop="static" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="initForm">
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-lg-4 form-control-label py-2">选择电平：</label>
+                                <div class="col-md-9 select col-lg-6">
+                                    <select id="highOrLow" class="form-control">
+                                        <option value="1">高电平</option>
+                                        <option value="0">低电平</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-lg-4 form-control-label py-2">选择输入输出：</label>
+                                <div class="col-md-9 select col-lg-6">
+                                    <select id="InOrOut" class="form-control">
+                                        <option value="1">输出</option>
+                                        <option value="0">输入</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="line"></div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 form-control-label py-2">密码：</label>
+                                <div class="col-sm-9">
+                                    <input type="password" id="password" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" id="subInit" class="btn btn-primary">
+                            提交更改
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- 文件模态框（Modal） -->
+        <div class="modal fade" id="passwordModel" tabindex="-1" data-backdrop="static" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="passwordForm">
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <label class="col-sm-3 form-control-label py-2">密码：</label>
+                                <div class="col-sm-9">
+                                    <input type="password" id="ctrlPassword" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="close">关闭
+                        </button>
+                        <button type="button" id="subCtrl" class="btn btn-primary">
+                            提交
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="page-holder w-100 d-flex flex-wrap">
+        <div class="container-fluid px-xl-5">
+            <section class="py-5">
+                <div class="row ">
+                    <div class="col-lg-12 mb-4">
+                        <div class="card">
+                            <div class="card-header ">
+                                <div class="row">
+                                    <h6 class="text-uppercase form-inline mb-0"> GPIO 控制</h6>
+                                    <div class="dot ml-2  bg-green"></div>
+                                    为高电平
+                                    <div class="dot ml-2 bg-red"></div>
+                                    为低电平
+                                </div>
+                                <hr>
+                                <p>当引脚全0时<a href="#" data-toggle="modal" data-target="#gpioInit">请点击此</a>进行初始化操作</p>
+                                <div class="card-body">
+                                    <table class="table table-hover card-text">
+                                        <thead>
+                                        <tr>
+                                            <th>GPIO</th>
+                                            <th>引脚别名</th>
+                                            <th>当前电平状态</th>
+                                            <th>I/O状态</th>
+                                            <th>电平操作</th>
+                                            <th>I/O操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="tBody">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
+            <button style="height: 0%;width: 0%" class="btn bg-white" disabled data-toggle="modal" data-target="#passwordModel" id="asd"></button>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-left text-primary">
+                        <!-- 版权信息 -->
+                        <p class="mb-2 mb-md-0"></p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        var obj = $.cookie("USER");
+        if (isEmpty(obj)) {
+            $(location).attr('href', 'index.html');
+        } else {
+            var userInfo = $.parseJSON(obj);
+            if (!isEmpty(userInfo)){
+                $("#user").html(userInfo.data.userName);
+            }
+
+            $("#deviceInfo").html("<a href=\"deviceinfo.html?deviceId=" + getUrlParameter("deviceId") + "\" class=\"sidebar-link text-muted\">\n" +
+                "            <i class=\"fas fa-desktop mr-3 text-gray\"></i><span>详情</span></a>");
+            $("#deviceCtrl").html("<a href=\"deviceController.html?deviceId=" + getUrlParameter("deviceId") + "\" class=\"sidebar-link text-muted\"><i\n" +
+                "                    class=\"o-imac-screen-1 mr-3 text-gray\"></i><span>设备控制</span></a>");
+            getGPIOInfo(getUrlParameter("deviceId"));
+        }
+
+
+
+        $("#subInit").click(function () {
+            var highOrLow = $("#highOrLow").val();
+            var inOrOut = $("#InOrOut").val();
+            var password = $("#password").val();
+            if (isEmpty(highOrLow)){
+                alert("请选择电平");
+            }else if (isEmpty(inOrOut)){
+                alert("请选择输入输出");
+            }else if (isEmpty(password)){
+                alert("请输入密码");
+            }else {
+                $.ajax({
+                    type: "post",
+                    url: "device/pressInIOControl.do",
+                    data: {"deviceId":getUrlParameter("deviceId"),"highOrLow":highOrLow,"inOrOut":inOrOut,"password":password},
+                    success:function (data) {
+                        var obj = $.parseJSON(data);
+                        if (!isEmpty(obj)&& obj.status==1){
+                            $("#subInit").prop("disabled", true);
+                            $("#initForm").html("<div class='modal-body m-auto col-12'><h2 class='m-auto'>"+obj.msg+"<i class='iconfont iconchenggong1 ml-2' style='color:green'></div></i></h2>");
+                        }else if (!isEmpty(obj)&& obj.status==0){
+                            $("#subInit").prop("disabled", true);
+                            $("#initForm").html("<div class='modal-body m-auto col-12'><h2 class='m-auto'>"+obj.msg+"<i class='iconfont iconcha m-auto' style='color:red'></i></h2>");
+                        } else if (!isEmpty(obj)&& obj.status==10){
+                            $(location).attr('href','index.html');
+                        }
+                    },
+                    dataType: "text"
+                })
+            }
+
+
+        })
+
+
+    });
+
+
+    function getGPIOInfo(id) {
+        $.ajax({
+            type: "post",
+            url: "device/getDeviceGPIOInfo.do",
+            data: {"deviceId": id},
+            success: function (data) {
+                var obj = $.parseJSON(data);
+                if (!isEmpty(obj) && obj.status == 1) {
+                    $("#tBody").html("");
+                    for (i in obj.data.data.list) {
+                        if (obj.data.data.list[i].inOrOut == 0 && obj.data.data.list[i].highOrLow == 0) {
+                            $("#tBody").append("<tr>" +
+                                "<th scope=\"row\">" + i + "</th>" +
+                                "<td>" + obj.data.data.list[i].pin + "</td>" +
+                                "<td><div class=\"dot ml-2 bg-red\"></div></td>" +
+                                "<td>In</td>" +
+                                "<td><a href=\"#\" class=\"ml-2\" onclick='ioCtrl("+obj.data.data.list[i].pin+",0,1)'>切换电平</a></td>" +
+                                "<td><a href=\"#\" onclick='ioCtrl("+obj.data.data.list[i].pin+",1,0)'>切换I/O</a></td></tr>");
+                        } else if (obj.data.data.list[i].inOrOut == 0 && obj.data.data.list[i].highOrLow == 1) {
+                            $("#tBody").append("<tr>" +
+                                "<th scope=\"row\">" + i + "</th>" +
+                                "<td>" + obj.data.data.list[i].pin + "</td>" +
+                                "<td><div class=\"dot ml-2 bg-green\"></div></td>" +
+                                "<td>In</td>" +
+                                "<td><a href=\"#\" class=\"ml-2\" onclick='ioCtrl("+obj.data.data.list[i].pin+",0,0)'>切换电平</a></td>" +
+                                "<td><a href=\"#\" onclick='ioCtrl("+obj.data.data.list[i].pin+",1,1)'>切换I/O</a></td></tr>");
+                        } else if (obj.data.data.list[i].inOrOut == 1 && obj.data.data.list[i].highOrLow == 0) {
+                            $("#tBody").append("<tr>" +
+                                "<th scope=\"row\">" + i + "</th>" +
+                                "<td>" + obj.data.data.list[i].pin + "</td>" +
+                                "<td><div class=\"dot ml-2 bg-red\"></div></td>" +
+                                "<td>Out</td>" +
+                                "<td><a href=\"#\" class=\"ml-2\" onclick='ioCtrl("+obj.data.data.list[i].pin+",1,1)'>切换电平</a></td>" +
+                                "<td><a href=\"#\" onclick='ioCtrl("+obj.data.data.list[i].pin+",0,0)'>切换I/O</a></td></tr>");
+                        } else if (obj.data.data.list[i].inOrOut == 1 && obj.data.data.list[i].highOrLow == 1){
+                            $("#tBody").append("<tr>" +
+                                "<th scope=\"row\">" + i + "</th>" +
+                                "<td>" + obj.data.data.list[i].pin + "</td>" +
+                                "<td><div class=\"dot ml-2 bg-green\"></div></td>" +
+                                "<td>Out</td>" +
+                                "<td><a href=\"#\" class=\"ml-2\" onclick='ioCtrl("+obj.data.data.list[i].pin+",1,0)'>切换电平</a></td>" +
+                                "<td><a href=\"#\" onclick='ioCtrl("+obj.data.data.list[i].pin+",0,1)'>切换I/O</a></td></tr>");
+                        }
+
+                    }
+
+                } else if (!isEmpty(obj) && obj.status == 1) {
+                    $(location).attr('href', 'index.html');
+                }
+            },
+            dataType: "text"
+        });
+    }
+
+    function ioCtrl(pin,inOrOut,highOrLow) {
+            // unbind('click') 解决jq事件冒泡 。重复
+            $("#asd").prop("disabled", false);
+            $("#asd").unbind('click').click();
+            $("#asd").prop("disabled", true);
+            $("#subCtrl").unbind('click').click(function () {
+                $("#subCtrl").prop("disabled", true);
+                var password = $("#ctrlPassword").val();
+                if (isEmpty(password)){
+                    alert("密码为空");
+                }else {
+                    $("#ctrlPassword").val("");
+                    $.ajax({
+                        type: "post",
+                        url: "device/pressInIOControl.do",
+                        data: {"deviceId":getUrlParameter("deviceId"),"highOrLow":highOrLow,"inOrOut":inOrOut,"pin":pin,"password":password},
+                        success:function (data) {
+                            var obj = $.parseJSON(data);
+                            if (!isEmpty(obj)&& obj.status==1){
+                                $("#close").unbind('click').click();
+                                alert(obj.msg);
+                            }else if (!isEmpty(obj)&& obj.status==0){
+                                $("#close").unbind('click').click();
+                                alert( obj.msg+"请稍后再试");
+                            } else if (!isEmpty(obj)&& obj.status==10){
+                                $(location).attr('href','index.html');
+                            }
+                        },
+                        dataType: "text"
+                    });
+                }
+                $("#subCtrl").prop("disabled", false);
+            });
+
+    }
+
+    function getUrlParameter(sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
+    };
+
+    function isEmpty(obj) {
+        if (typeof obj == "undefined" || obj == null || obj == "") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function logout() {
+        $.ajax({
+            type: "post",
+            url: "user/logout.do",
+            success: function (data) {
+                var obj = $.parseJSON(data)
+                if (!isEmpty(obj) && obj.status == 1) {
+                    $.cookie("USER", null);
+                    $(location).attr('href', 'index.html');
+                }
+            },
+            dataType: "text"
+        });
+        $.cookie("USER", null);
+        $(location).attr('href', 'index.html');
+    }
+</script>
+</body>
+
+</html>

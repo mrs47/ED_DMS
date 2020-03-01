@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet">
+    <!-- Google fonts - Popppins for copy-->
+    <link rel="stylesheet" href="fonts/iconfont.css">
+    <!-- orion icons-->
+    <link rel="stylesheet" href="css/orionicons.css">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <!-- JavaScript files-->
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1557432_f1au4sax4zc.css">
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper.js/umd/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/jquery.cookie/jquery.cookie.js"></script>
+    <script src="js/js.cookie.min.js"></script>
+    <script src="js/front.js"></script>
+</head>
+
+<body>
+<!-- navbar-->
+<header class="header">
+    <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow"><a href="center.html"
+                                                                      class="text-gray-500 mr-4 mr-lg-5 lead"><img
+            src="img/back.png" style="max-width: 1.5rem;"></a><a
+            href="center.html" class="navbar-brand font-weight-bold text-uppercase text-base">个人中心</a>
+        <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
+            <li class="nav-item">
+                <form id="searchForm" class="ml-auto d-none d-lg-block">
+                    <div class="form-group position-relative mb-0">
+                        <button type="submit" style="top: -3px; left: 0;"
+                                class="position-absolute bg-white border-0 p-0"><i
+                                class="o-search-magnify-1 text-gray text-lg"></i></button>
+                        <input type="search" placeholder="搜索 ..."
+                               class="form-control form-control-sm border-0 no-shadow pl-4">
+                    </div>
+                </form>
+            </li>
+            <li class="nav-item dropdown mr-3"><a id="notifications" href="http://example.com" data-toggle="dropdown"
+                                                  aria-haspopup="true" aria-expanded="false"
+                                                  class="nav-link dropdown-toggle text-gray-400 px-1"><i
+                    class="fa fa-bell"></i><span class="notification-icon"></span></a>
+                <div aria-labelledby="notifications" class="dropdown-menu"><a href="#" class="dropdown-item">
+
+                    <div class="d-flex align-items-center">
+                        <div class="icon icon-sm bg-green text-white"><i class="fas fa-envelope"></i></div>
+                        <div class="text ml-2">
+                            <p class="mb-0">你有6条消息</p>
+                        </div>
+                    </div>
+                </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown ml-auto"><a id="userInfo" href="http://example.com" data-toggle="dropdown"
+                                                     aria-haspopup="true" aria-expanded="false"
+                                                     class="nav-link dropdown-toggle"><img src="img/avatar-6.jpg"
+                                                                                           alt="Jason Doe"
+                                                                                           style="max-width: 2.5rem;"
+                                                                                           class="img-fluid rounded-circle shadow"></a>
+                <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong
+                        class="d-block text-uppercase headings-font-family" id="user"></strong></a>
+                    <!--            <div class="dropdown-divider"></div><a href="personalcenter.html" class="dropdown-item">设置</a>-->
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item" onclick="logout()">退出</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+</header>
+<div class="d-flex align-items-stretch">
+    <div id="sidebar" class="sidebar py-3">
+        <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">MAIN
+        </div>
+        <ul class="sidebar-menu list-unstyled">
+            <li class="sidebar-list-item"><a href="personalcenter.html" class="sidebar-link text-muted active"><i
+                    class="o-survey-1 mr-3 text-gray"></i><span>安全中心</span></a></li>
+        </ul>
+    </div>
+    <div class="page-holder w-100 d-flex flex-wrap">
+        <div class="col-lg-7 ml-auto mr-auto py-3">
+            <div class="card col-lg-12 ">
+                <div class="py-3 text-center">
+                    <h5>个人信息</h5>
+                </div>
+                <div class="row  col-lg-12">
+                    <div class="col-lg-5 col-md-5" style="max-width: 9rem;">
+                        <img class="rounded-circle" style="max-width: 8rem;" src="img/avatar-2.jpg">
+                    </div>
+                    <div class="col-lg-7 col-md- py-2" id="info">
+
+                    </div>
+                    <table class="table card-text">
+                        <tbody class="col-lg-12" id="tBody">
+
+                        </tbody>
+                    </table>
+                    <!-- 模态框（Modal） -->
+                    <div class="modal fade" id="changePassword" tabindex="-1" data-backdrop="static" role="dialog"
+                         aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="text-base">修改密码</h4>
+                                </div>
+                                <form class="" id="formBody">
+                                    <div class="modal-body ">
+                                        <div class="row form-group"><label class="m-auto" id="safeEmail"></label></div>
+                                        <div class="form-group row">
+                                            <div class="col-lg-4 py-2">旧密码：</div>
+                                            <input type="password" id="oldPassword" placeholder="旧密码"
+                                                   class="form-last-name form-control col-lg-5">
+                                            <div id="p1State"></div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-lg-4 py-2">新密码：</div>
+                                            <input type="password" id="password1" placeholder="新密码(六位以上)"
+                                                   class="form-last-name form-control col-lg-5">
+                                            <div id="p2State">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-lg-4 py-2">新密码：</div>
+                                            <input type="password" id="password2" placeholder="新重复密码(六位以上)"
+                                                   class="form-last-name form-control col-lg-5">
+                                            <div id="p3State">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                    </button>
+                                    <button type="button" id="sub" disabled class="btn btn-primary">
+                                        提交更改
+                                    </button>
+                                </div>
+
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                    </div>
+
+                    <!-- 模态框（Modal） -->
+                    <div class="modal fade" id="changePhoneNamber" tabindex="-1" data-backdrop="static" role="dialog"
+                         aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="text-base">修改手机号</h4>
+                                </div>
+                                <form class="">
+                                    <div class="modal-body ">
+                                        <div class="row form-group"><label class="m-auto">绑定手机：138*******4353</label>
+                                        </div>
+                                        <div class="form-group row py-2">
+                                            <div class="input-group mb-3">
+                                                <div class="col-lg-4 py-2">验证码：</div>
+                                                <input type="text" name="token" placeholder="验证码"
+                                                       class="form-control col-lg-4">
+                                                <div class="input-group-append ">
+                                                    <button id="button-addon2" type="button" class="btn btn-primary ">
+                                                        发送验证码
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        解绑
+                                    </button>
+                                </div>
+
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-left text-primary">
+                        <!-- 版权信息 -->
+                        <p class="mb-2 mb-md-0"></p>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        var obj = $.cookie("USER");
+        if (isEmpty(obj)) {
+            $(location).attr('href', 'index.html');
+        } else {
+            var userInfo = $.parseJSON(obj);
+            if (!isEmpty(userInfo)){
+                $("#user").html(userInfo.data.userName);
+            }
+            $("#info").html("<div class=\"row\">\n" +
+                "                <label class=\"col-lg-12  \">登录账号：" + userInfo.data.email + "</label>\n" +
+                "              </div>\n" +
+                "              <div class=\"row\">\n" +
+                "                <label class=\"col-lg-12 py-2\">账号ID：" + userInfo.data.userId + "</label>\n" +
+                "              </div>\n" +
+                "              <div class=\"row\">\n" +
+                "                <label class=\"col-lg-12 py-2\">注册时间：" + userInfo.data.createTime + "</label>\n" +
+                "              </div>");
+            $("#tBody").html("<tr>\n" +
+                "                  <th style=\"white-space: nowrap\">登录密码</th>\n" +
+                "                  <td style=\"white-space: nowrap\">设置一个包含字母，符号或数字中至少两项且长度超过6位的密码。</td>\n" +
+                "                  <td style=\"white-space: nowrap\"><button type=\"button\" data-toggle=\"modal\"\n" +
+                "                      data-target=\"#changePassword\" class=\" text-blue  bg-white ml-2\"\n" +
+                "                      style=\"border: 0 !important;\">修改</button></td>\n" +
+                "                </tr>\n" +
+                "                <tr >\n" +
+                "                  <th style=\"white-space: nowrap\">手机号绑定</th>\n" +
+                "                  <td style=\"white-space: nowrap\">您已绑定了手机138****5343</td>\n" +
+                "                  <td style=\"white-space: nowrap\"><button type=\"button\" data-toggle=\"modal\" data-target=\"#changePhoneNamber\"\n" +
+                "                      class=\" text-blue  bg-white ml-2\" style=\"border: 0 !important;\">修改</button></td>\n" +
+                "                </tr>\n" +
+                "                <tr>\n" +
+                "                  <th style=\"white-space: nowrap\">邮箱绑定</th>\n" +
+                "                  <td style=\"white-space: nowrap\">您已绑定了邮箱" + userInfo.data.email + "</td>\n" +
+                "                  <td style=\"white-space: nowrap\"><button type=\"button\" data-toggle=\"modal\" data-target=\"#myModal\"\n" +
+                "                      class=\" text-blue  bg-white ml-2\" style=\"border: 0 !important;\">无法修改</button></td>\n" +
+                "                </tr>");
+        }
+
+        $("#oldPassword").on("input", function () {
+            var oldPassword = $("#oldPassword").val();
+            if (oldPassword.length < 7 || oldPassword.length > 32) {
+                $("#sub").prop("disabled", true);
+                $("#p1State").html("<i class='iconfont iconcha ml-2' style='color:red'></i>")
+            } else {
+                $("#sub").prop("disabled", false);
+                $("#p1State").html("<i class='iconfont iconchenggong1 ml-2' style='color:green'></i>");
+            }
+        });
+
+        $("#password1").on("input", function () {
+            var password = $("#password1").val();
+            if (password.length < 7 || password.length > 32) {
+                $("#sub").prop("disabled", true);
+                $("#p2State").html("<i class='iconfont iconcha ml-2' style='color:red'></i>")
+            } else {
+                $("#sub").prop("disabled", false);
+                $("#p2State").html("<i class='iconfont iconchenggong1 ml-2' style='color:green'></i>");
+            }
+        });
+
+        $("#password2").on("input", function () {
+            var password1 = $("#password1").val();
+            var password2 = $("#password2").val();
+            if (password2.length < 7 || password2.length > 32 || password1 != password2) {
+                $("#sub").prop("disabled", true);
+                $("#p3State").html("<i class='iconfont iconcha ml-2' style='color:red'></i>")
+            } else {
+                $("#sub").prop("disabled", false);
+                $("#p3State").html("<i class='iconfont iconchenggong1 ml-2' style='color:green'></i>");
+            }
+        });
+
+
+        $("#sub").click(function () {
+            var oldPassword = $("#oldPassword").val();
+            var p1 = $("#password1").val();
+            var p2 = $("#password2").val()
+            if (isEmpty(oldPassword) || isEmpty(p1) || isEmpty(p2)) {
+                $("#sub").prop("disabled", true);
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: "user/modifyPassword.do",
+                    data: {"passwordOld": oldPassword, "passwordNew": p1},
+                    success: function (data) {
+                        var obj = $.parseJSON(data);
+                        if (obj.status == 1) {
+                            $("#sub").prop("disabled", true);
+                            $("#formBody").html("<div class='modal-body m-auto col-12'><h2 class='m-auto'>" + obj.msg + "<i class='iconfont iconchenggong1 ml-2' style='color:green'></div></i></h2>");
+                            $.cookie("USER", null);
+                            setTimeout(Jump, 3000);
+                        } else if (obj.status == 10) {
+                            $(location).attr('href', 'index.html');
+                        } else {
+                            $("#sub").prop("disabled", true);
+                            $("#formBody").html("<div class='modal-body m-auto col-12'><h2 class='m-auto'>" + obj.msg + "<i class='iconfont iconcha m-auto' style='color:red'></i></h2>");
+                        }
+                    },
+                    dataType: "text"
+                });
+            }
+        });
+    });
+    function Jump() {
+        $(location).attr('href', 'index.html')
+    }
+    function isEmpty(obj) {
+        if (typeof obj == "undefined" || obj == null || obj == "") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function logout() {
+        $.ajax({
+            type: "post",
+            url: "user/logout.do",
+            success: function (data) {
+                var obj = $.parseJSON(data)
+                if (!isEmpty(obj) && obj.status == 1) {
+                    $.cookie("USER", null);
+                    $(location).attr('href', 'index.html');
+                }
+            },
+            dataType: "text"
+        });
+        $.cookie("USER", null);
+        $(location).attr('href', 'index.html');
+    }
+</script>
+</body>
+
+</html>

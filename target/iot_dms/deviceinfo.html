@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet">
+    <!-- Google fonts - Popppins for copy-->
+    <link rel="stylesheet" href="fonts/iconfont.css">
+    <!-- orion icons-->
+    <link rel="stylesheet" href="css/orionicons.css">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <!-- JavaScript files-->
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1557432_f1au4sax4zc.css">
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper.js/umd/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/jquery.cookie/jquery.cookie.js"></script>
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="js/js.cookie.min.js"></script>
+    <script src="js/front.js"></script>
+</head>
+
+<body>
+<!-- navbar-->
+<header class="header">
+    <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow"><a href="#"
+                                                                      class="sidebar-toggler text-gray-500 mr-4 mr-lg-5 lead"><i
+            class="fas fa-align-left"></i></a><a
+            href="center.html" class="navbar-brand font-weight-bold text-uppercase text-base">设备ID</a>
+        <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
+            <li class="nav-item">
+                <form id="searchForm" class="ml-auto d-none d-lg-block">
+                    <div class="form-group position-relative mb-0">
+                        <button type="submit" style="top: -3px; left: 0;"
+                                class="position-absolute bg-white border-0 p-0"><i
+                                class="o-search-magnify-1 text-gray text-lg"></i></button>
+                        <input type="search" placeholder="搜索 ..."
+                               class="form-control form-control-sm border-0 no-shadow pl-4">
+                    </div>
+                </form>
+            </li>
+            <li class="nav-item dropdown mr-3"><a id="notifications" href="http://example.com" data-toggle="dropdown"
+                                                  aria-haspopup="true" aria-expanded="false"
+                                                  class="nav-link dropdown-toggle text-gray-400 px-1"><i
+                    class="fa fa-bell"></i><span class="notification-icon"></span></a>
+                <div aria-labelledby="notifications" class="dropdown-menu"><a href="#" class="dropdown-item">
+
+                    <div class="d-flex align-items-center">
+                        <div class="icon icon-sm bg-green text-white"><i class="fas fa-envelope"></i></div>
+                        <div class="text ml-2">
+                            <p class="mb-0">你有6条信息</p>
+                        </div>
+                    </div>
+                </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown ml-auto"><a id="userInfo" href="http://example.com" data-toggle="dropdown"
+                                                     aria-haspopup="true" aria-expanded="false"
+                                                     class="nav-link dropdown-toggle"><img src="img/avatar-6.jpg"
+                                                                                           alt="Jason Doe"
+                                                                                           style="max-width: 2.5rem;"
+                                                                                           class="img-fluid rounded-circle shadow"></a>
+                <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong
+                        class="d-block text-uppercase headings-font-family" id="user">用户名</strong></a>
+                    <div class="dropdown-divider"></div>
+                    <a href="personalcenter.html" class="dropdown-item">个人中心</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item" onclick="logout()">退出</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+<div class="d-flex align-items-stretch">
+    <div id="sidebar" class="sidebar py-3">
+        <ul class="sidebar-menu list-unstyled">
+            <li class="sidebar-list-item"><a href="center.html" class="sidebar-link text-muted"><i
+                    class="o-home-1 mr-3 text-gray"></i><span>监控中心</span></a></li>
+            <li class="sidebar-list-item"><a href="deviceinfo.html" class="sidebar-link text-muted">
+                <i class="fas fa-desktop mr-3 text-gray"></i><span>详情</span></a></li>
+        </ul>
+        <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">扩展功能
+        </div>
+        <ul class="sidebar-menu list-unstyled">
+            <li class="sidebar-list-item"><a href="#upload" id="onUploadFile" data-toggle="modal" data-target="#upload"
+                                             class="sidebar-link text-muted"><i class="o-database-1 mr-3 text-gray"></i><span>文件上传</span></a>
+            </li>
+            <li class="sidebar-list-item" id="deviceCtrl"><a href="deviceController.html?deviceId="
+                                                             class="sidebar-link text-muted"><i
+                    class="o-imac-screen-1 mr-3 text-gray"></i><span>设备控制</span></a></li>
+            <li class="sidebar-list-item"><a href="#" data-toggle="modal" id="onUpdateSoft" data-target="#upgrade"
+                                             class="sidebar-link text-muted"><i
+                    class="o-paperwork-1 mr-3 text-gray"></i><span>软件更新</span></a></li>
+
+        </ul>
+
+        <!-- 文件模态框（Modal） -->
+        <div class="modal fade" id="upload" tabindex="-1" data-backdrop="static" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="text-base" id="myModalLabel py-2">选择文件</h4>
+                    </div>
+                    <form id="fileForm">
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <label class="col-sm-3 form-control-label py-2">文件路径：</label>
+                                <div class="col-sm-9">
+                                    <input type="text" id="fileId" placeholder="填写文件仓库的“FilePath”"
+                                           class="form-control">
+                                </div>
+                            </div>
+                            <div class="line"></div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 form-control-label py-2">密码：</label>
+                                <div class="col-sm-9">
+                                    <input type="password" id="filePassword" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                            </button>
+                            <button type="button" class="btn btn-primary" id="uploadFileSub">
+                                提交
+                            </button>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 软件态框（Modal） -->
+        <div class="modal fade" id="upgrade" tabindex="-1" data-backdrop="static" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="text-base" id="myModalLabel">选择软件版本</h4>
+                    </div>
+                    <form id="softForm">
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <label class="col-md-3 form-control-label py-2">软件版本：</label>
+                                <div class="col-md-9 select col-lg-6">
+                                    <select id="softVersion" class="form-control">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="line"></div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 form-control-label py-2">密码：</label>
+                                <div class="col-sm-9">
+                                    <input type="password" id="softPassword" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                            </button>
+                            <button type="button" class="btn btn-primary" id="uploadSoftSub">
+                                提交
+                            </button>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="page-holder w-100 d-flex flex-wrap">
+        <div class="container-fluid px-xl-5">
+            <section class="py-5">
+                <div class="row mb-4">
+                    <div class="col-lg-8 mb-4 mb-lg-0">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="h6 text-uppercase mb-0">CPU使用情况</h2>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-5 text-gray">统计数据为近30分钟</p>
+                                <div class="chart-holder mt-2 mb-5">
+                                    <canvas id="CPUUsage"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card mb-1">
+                            <div class="card-header">
+                                <h2 class="h6 text-uppercase mb-0">CPU温度</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-holder">
+                                    <canvas id="CPUTemp"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-1">
+                            <div class="card-body">
+                                <div class="row align-items-center flex-row">
+                                    <div class="">
+                                        <h3 class="mb-0 d-flex align-items-center"><span
+                                                class="dot bg-green d-inline-block ml-3"></span></h3><span
+                                            class="text-muted text-uppercase small" id="Meminfo"></span>
+                                        <hr>
+                                        <p class="text-muted">内存使用剩余情况(MB)</p>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <canvas id="Mem"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-1">
+                            <div class="card-body">
+                                <div class="row align-items-center flex-row">
+                                    <div class="">
+                                        <h3 class="mb-0 d-flex align-items-center"><span
+                                                class="dot bg-blue d-inline-block ml-3"></span></h3><span
+                                            class="text-muted text-uppercase small" id="SDInfo"></span>
+                                        <hr>
+                                        <p class="text-muted">存储使用剩余情况(Byte)</p>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <canvas id="SD"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="row col-12">
+                        <div class="card mb-4 col-12">
+                            <div class="card-header">
+                                <h2 class="h6 text-uppercase mb-0">网络使用情况</h2>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-5 text-gray">近半个小时的网络数据</p>
+                                <div class="chart-holder mt-2 mb-5">
+                                    <canvas id="Net"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="row col-12">
+                        <div class="card-body">
+                            <table class="table table-hover card-text">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>进程名</th>
+                                    <th>PID</th>
+                                    <th>状态</th>
+                                    <th>用户</th>
+                                    <th>CPU使用率</th>
+                                    <th>内存使用率</th>
+                                    <th>时间</th>
+                                </tr>
+                                </thead>
+                                <tbody id="pTbody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-left text-primary">
+                        <!-- 版权信息 -->
+                        <p class="mb-2 mb-md-0"></p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var obj = $.cookie("USER");
+        if (isEmpty(obj)) {
+            $(location).attr('href', 'index.html');
+        } else {
+            var userInfo = $.parseJSON(obj);
+            if (!isEmpty(userInfo)){
+                $("#user").html(userInfo.data.userName);
+            }
+            $("#deviceCtrl").html("<a href=\"deviceController.html?deviceId=" + getUrlParameter("deviceId") + "\" class=\"sidebar-link text-muted\"><i\n" +
+                "                    class=\"o-imac-screen-1 mr-3 text-gray\"></i><span>设备控制</span></a>");
+            getDeviceInfo(getUrlParameter("deviceId"));
+        }
+
+        $("#onUpdateSoft").click(function () {
+            var deviceId = getUrlParameter("deviceId");
+            $.ajax({
+                type: "post",
+                url: "device/selectSoft.do",
+                data: {"deviceId": deviceId},
+                success: function (data) {
+                    var obj = $.parseJSON(data);
+                    if (!isEmpty(obj) || obj.status == 1) {
+                        $("#softVersion").html("");
+                        for (i = 0; i < obj.data.length; i++) {
+                            if (!isEmpty(obj.data[i])) {
+                                $("#softVersion").append("<option value=\"" + obj.data[i].softId + "\" >" + obj.data[i].softName + " " + obj.data[i].version + "</option>");
+                            }
+                        }
+                    } else if (obj.status == 10) {
+                        $(location).attr('href', 'index.html');
+                    }
+                },
+                dataType: "text"
+            });
+        });
+
+        $("#uploadFileSub").click(function () {
+            var fileId = $("#fileId").val();
+            var passwd = $("#filePassword").val();
+            if (isEmpty(passwd)){
+                alert("请填写密码!");
+            }else if(isEmpty(fileId)) {
+                alert("请填写文件路径!");
+            }else {
+                $.ajax({
+                   type: "post",
+                   url: "download/pressInSoft.do",
+                    data: {"fileId":fileId,"deviceId":getUrlParameter("deviceId"),"password":passwd},
+                    success: function (data) {
+                        var obj = $.parseJSON(data);
+                        if (!isEmpty(obj) && obj.status==1){
+                            $("#uploadFileSub").prop("disabled", true);
+                            $("#fileForm").html("<div class='modal-body m-auto col-12'><h2 class='m-auto'>"+obj.msg+"<i class='iconfont iconchenggong1 ml-2' style='color:green'></div></i></h2>");
+                        }else if (!isEmpty(obj) && obj.status==0){
+                            $("#uploadFileSub").prop("disabled", true);
+                            $("#fileForm").html("<div class='modal-body m-auto col-12'><h2 class='m-auto'>"+obj.msg+"<i class='iconfont iconcha m-auto' style='color:red'></i></h2>");
+                        }else if (!isEmpty(obj) && obj.status==10){
+                            $(location).attr('href','index.html');
+                        }
+                    },
+                    dataType: "text"
+                });
+            }
+        });
+
+
+        $("#uploadSoftSub").click(function () {
+            var softId = $("#softVersion").val();
+            var passwd = $("#softPassword").val();
+            if (isEmpty(passwd)){
+                alert("请填写密码!");
+            }else {
+                $.ajax({
+                    type: "post",
+                    url: "download/pressInSoft.do",
+                    data: {"softId":softId,"deviceId":getUrlParameter("deviceId"),"password":passwd},
+                    success: function (data) {
+                        var obj = $.parseJSON(data);
+                        if (!isEmpty(obj) && obj.status==1){
+                            $("#uploadSoftSub").prop("disabled", true);
+                            $("#softForm").html("<div class='modal-body m-auto col-12'><h2 class='m-auto'>"+obj.msg+"<i class='iconfont iconchenggong1 ml-2' style='color:green'></div></i></h2>");
+                        }else if (!isEmpty(obj) && obj.status==0){
+                            $("#uploadSoftSub").prop("disabled", true);
+                            $("#softForm").html("<div class='modal-body m-auto col-12'><h2 class='m-auto'>"+obj.msg+"<i class='iconfont iconcha m-auto' style='color:red'></i></h2>");
+                        }else if (!isEmpty(obj) && obj.status==10){
+                            $(location).attr('href','index.html');
+                        }
+                    },
+                    dataType: "text"
+                });
+            }
+        });
+
+
+    });
+
+    function isEmpty(obj) {
+        if (typeof obj == "undefined" || obj == null || obj == "") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function logout() {
+        $.ajax({
+            type: "post",
+            url: "user/logout.do",
+            success: function (data) {
+                var obj = $.parseJSON(data)
+                if (!isEmpty(obj) && obj.status == 1) {
+                    $.cookie("USER", null);
+                    $(location).attr('href', 'index.html');
+                }
+            },
+            dataType: "text"
+        });
+        $.cookie("USER", null);
+        $(location).attr('href', 'index.html');
+    }
+
+    function getDeviceInfo(id) {
+        var violet = '#DF99CA',
+            red = '#F0404C',
+            blue = '#4680ff',
+            green = '#7CF29C';
+
+        // ------------------------------------------------------- //
+        // Charts Gradients
+        // ------------------------------------------------------ //
+        var ctx1 = $("canvas").get(0).getContext("2d");
+        var gradient2 = ctx1.createLinearGradient(10, 0, 150, 300);
+        gradient2.addColorStop(0, 'rgba(252, 117, 176, 0.84)');
+        gradient2.addColorStop(1, 'rgba(250, 199, 106, 0.92)');
+
+        $.ajax({
+            type: "post",
+            url: "device/getDeviceInfo.do",
+            data: {"deviceId": id},
+            success: function (data) {
+                var obj = $.parseJSON(data);
+                if (!isEmpty(obj) && obj.status == 1) {
+
+                    var arrayTime = new Array();
+                    var arrayUsage = new Array();
+                    var usage = new Array();
+
+                    var LINECHARTEXMPLE = $('#CPUUsage');
+                    var lineChartExample = new Chart(LINECHARTEXMPLE, {
+                        type: 'line',
+                        options: {
+                            legend: {labels: {fontColor: "#777", fontSize: 10}},
+                            scales: {
+                                xAxes: [{
+                                    display: false,
+                                    gridLines: {
+                                        color: '#fff'
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    ticks: {
+                                        // max: getMaxNum(arrayUsage.concat(obj.data[0].data.cpu.usage, obj.data[1].data.cpu.usage, obj.data[2].data.cpu.usage, obj.data[3].data.cpu.usage, obj.data[4].data.cpu.usage, obj.data[5].data.cpu.usage, obj.data[6].data.cpu.usage)),
+                                        //min: 0
+                                    },
+                                    gridLines: {
+                                        color: '#fff'
+                                    }
+                                }]
+                            },
+                        },
+                        data: {
+                            labels: arrayTime.concat(obj.data[0].data.cpu.time, obj.data[1].data.cpu.time, obj.data[2].data.cpu.time, obj.data[3].data.cpu.time, obj.data[4].data.cpu.time, obj.data[5].data.cpu.time, obj.data[6].data.cpu.time),
+                            datasets: [
+                                {
+                                    label: "使用率(%)",
+                                    fill: true,
+                                    bezierCurve: true,
+                                    lineTension: 0.3,
+                                    backgroundColor: "transparent",
+                                    borderColor: green,
+                                    pointBorderColor: green,
+                                    pointHoverBackgroundColor: green,
+                                    borderCapStyle: 'butt',
+                                    borderDash: [],
+                                    borderDashOffset: 0.0,
+                                    borderJoinStyle: 'miter',
+                                    borderWidth: 3,
+                                    pointBackgroundColor: "#fff",
+                                    pointBorderWidth: 2,
+                                    pointHoverRadius: 5,
+                                    pointHoverBorderColor: "#fff",
+                                    pointHoverBorderWidth: 2,
+                                    pointRadius: 1,
+                                    pointHitRadius: 10,
+                                    data: usage.concat(obj.data[0].data.cpu.usage, obj.data[1].data.cpu.usage, obj.data[2].data.cpu.usage, obj.data[3].data.cpu.usage, obj.data[4].data.cpu.usage, obj.data[5].data.cpu.usage, obj.data[6].data.cpu.usage),
+                                    spanGaps: false
+                                }
+                            ]
+                        }
+                    });
+
+
+                    var CPUTime = new Array();
+                    var CPUTemp = new Array();
+                    var BARCHARTEXMPLE = $('#CPUTemp');
+                    var barChartExample = new Chart(BARCHARTEXMPLE, {
+                        type: 'bar',
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    display: false,
+                                    gridLines: {
+                                        color: '#fff'
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    gridLines: {
+                                        color: '#fff'
+                                    }
+                                }]
+                            },
+                            legend: false
+                        },
+                        data: {
+                            labels: CPUTime.concat(obj.data[6].data.cpu.time),
+                            datasets: [
+                                {
+                                    label: "温度(摄氏度)",
+                                    backgroundColor: [
+                                        gradient2,
+                                        gradient2,
+                                        gradient2,
+                                        gradient2,
+                                        gradient2,
+                                        gradient2,
+                                        gradient2,
+                                        gradient2,
+                                        gradient2,
+                                        gradient2
+                                    ],
+                                    hoverBackgroundColor: [
+                                        gradient2,
+                                        gradient2,
+                                        gradient2,
+                                        gradient2,
+                                        gradient2,
+                                        gradient2,
+                                        gradient2,
+                                        gradient2,
+                                        gradient2,
+                                        gradient2
+
+                                    ],
+                                    borderColor: [
+                                        gradient2,
+                                        gradient2,
+                                        gradient2,
+                                        gradient2,
+                                        gradient2,
+                                        gradient2,
+                                        gradient2,
+                                        gradient2,
+                                        gradient2,
+                                        gradient2
+                                    ],
+                                    borderWidth: 1,
+                                    data: CPUTemp.concat(obj.data[6].data.cpu.temp),
+                                }
+                            ]
+                        }
+                    });
+
+                    // ------------------------------------------------------- //
+                    // SD
+                    // ------------------------------------------------------ //
+                    var PIECHART = $('#SD');
+                    var myPieChart = new Chart(PIECHART, {
+                        type: 'doughnut',
+                        options: {
+                            cutoutPercentage: 90,
+                            legend: {
+                                display: false
+                            }
+                        },
+                        data: {
+                            labels: [
+                                "未用",
+                                "已用"
+                            ],
+                            datasets: [{
+                                data: [obj.data[6].data.hd.free, obj.data[6].data.hd.used],
+                                borderWidth: [0, 0],
+                                backgroundColor: [
+                                    blue,
+                                    "#eee"
+                                ],
+                                hoverBackgroundColor: [
+                                    blue,
+                                    "#eee"
+                                ]
+                            }]
+                        }
+                    });
+
+                    $("#SDInfo").html("<h3>" + parseInt(obj.data[6].data.hd.free / obj.data[6].data.hd.total * 100) + "%</h3>")
+                    // ------------------------------------------------------- //
+                    // 网络
+                    // ------------------------------------------------------ //
+
+                    var speedMax = getMaxNum(new Array().concat(obj.data[0].data.net.netIn.wlan0, obj.data[0].data.net.netOut.wlan0, obj.data[0].data.net.netIn.eth0, obj.data[0].data.net.netOut.eth0,
+                        obj.data[1].data.net.netIn.wlan0, obj.data[1].data.net.netOut.wlan0, obj.data[1].data.net.netIn.eth0, obj.data[1].data.net.netOut.eth0,
+                        obj.data[2].data.net.netIn.wlan0, obj.data[2].data.net.netOut.wlan0, obj.data[2].data.net.netIn.eth0, obj.data[2].data.net.netOut.eth0,
+                        obj.data[3].data.net.netIn.wlan0, obj.data[3].data.net.netOut.wlan0, obj.data[3].data.net.netIn.eth0, obj.data[3].data.net.netOut.eth0,
+                        obj.data[4].data.net.netIn.wlan0, obj.data[4].data.net.netOut.wlan0, obj.data[4].data.net.netIn.eth0, obj.data[4].data.net.netOut.eth0,
+                        obj.data[5].data.net.netIn.wlan0, obj.data[5].data.net.netOut.wlan0, obj.data[5].data.net.netIn.eth0, obj.data[5].data.net.netOut.eth0,
+                        obj.data[6].data.net.netIn.wlan0, obj.data[6].data.net.netOut.wlan0, obj.data[6].data.net.netIn.eth0, obj.data[6].data.net.netOut.eth0))
+                    var len = (speedMax + "").length;
+                    var kb = 'Kb/s';
+                    var mb = 'Mb/s';
+                    var unit;
+                    var wlan0SpeedIn = new Array();
+                    var wlan0SpeedOut = new Array();
+                    var eth0SpeedIn = new Array();
+                    var eth0SpeedOut = new Array();
+                    var wlan0In = new Array().concat(obj.data[0].data.net.netIn.wlan0, obj.data[1].data.net.netIn.wlan0, obj.data[2].data.net.netIn.wlan0, obj.data[3].data.net.netIn.wlan0, obj.data[4].data.net.netIn.wlan0, obj.data[5].data.net.netIn.wlan0, obj.data[6].data.net.netIn.wlan0);
+                    var wlan0Out = new Array().concat(obj.data[0].data.net.netOut.wlan0, obj.data[1].data.net.netOut.wlan0, obj.data[2].data.net.netOut.wlan0, obj.data[3].data.net.netOut.wlan0, obj.data[4].data.net.netOut.wlan0, obj.data[5].data.net.netOut.wlan0, obj.data[6].data.net.netOut.wlan0);
+                    var eth0In = new Array().concat(obj.data[0].data.net.netIn.eth0, obj.data[1].data.net.netIn.eth0, obj.data[2].data.net.netIn.eth0, obj.data[3].data.net.netIn.eth0, obj.data[4].data.net.netIn.eth0, obj.data[5].data.net.netIn.eth0, obj.data[6].data.net.netIn.eth0);
+                    var eth0Out = new Array().concat(obj.data[0].data.net.netOut.eth0, obj.data[1].data.net.netOut.eth0, obj.data[2].data.net.netOut.eth0, obj.data[3].data.net.netOut.eth0, obj.data[4].data.net.netOut.eth0, obj.data[5].data.net.netOut.eth0, obj.data[6].data.net.netOut.eth0);
+
+                    if (len <= 6) {
+                        speedMax = speedMax / 1024;
+                        unit = kb;
+                        for (v in wlan0In) {
+                            wlan0SpeedIn.push(wlan0In[v] / 1024);
+                        }
+                        for (v in wlan0Out) {
+                            wlan0SpeedOut.push(wlan0Out[v] / 1024);
+                        }
+                        for (v in eth0In) {
+                            eth0SpeedIn.push(eth0In[v] / 1024);
+                        }
+                        for (v in eth0Out) {
+                            eth0SpeedOut.push(eth0Out[v] / 1024);
+                        }
+                    } else if (len > 6) {
+                        speedMax = (speedMax / 1024) / 1024;
+                        unit = mb;
+                        for (v in wlan0In) {
+                            wlan0SpeedIn.push(wlan0In[v] / 1024 / 1024);
+                        }
+                        for (v in wlan0Out) {
+                            wlan0SpeedOut.push(wlan0Out[v] / 1024 / 1024);
+                        }
+                        for (v in eth0In) {
+                            eth0SpeedIn.push(eth0In[v] / 1024 / 1024);
+                        }
+                        for (v in eth0Out) {
+                            eth0SpeedOut.push(eth0Out[v] / 1024 / 1024);
+                        }
+                    }
+                    var LINECHART = $('#Net');
+                    if (!isEmpty(obj.data[0].data.net.netIn.wlan0)) {
+                        var myLineChart = new Chart(LINECHART, {
+                            type: 'line',
+                            options: {
+                                scales: {
+                                    xAxes: [{
+                                        display: false
+                                    }],
+                                    yAxes: [{
+                                        ticks: {
+                                            // max: speedMax,
+                                            //min: 0
+                                        },
+                                        display: true
+                                    }]
+                                },
+                                legend: {
+                                    display: true
+                                }
+                            },
+                            data: {
+                                labels: new Array().concat(obj.data[0].data.net.time, obj.data[1].data.net.time, obj.data[2].data.net.time, obj.data[3].data.net.time, obj.data[4].data.net.time, obj.data[5].data.net.time, obj.data[6].data.net.time),
+                                datasets: [
+                                    {
+                                        label: "wlan0下载网速:" + unit,
+                                        fill: true,
+                                        bezierCurve: true,
+                                        lineTension: 0.3,
+                                        backgroundColor: "rgba(144,238,144, 0.3)",
+                                        borderColor: 'rgba(144,238,144, 0.9)',
+                                        borderCapStyle: 'butt',
+                                        borderDash: [],
+                                        borderDashOffset: 0.0,
+                                        borderJoinStyle: 'miter',
+                                        borderWidth: 2,
+                                        pointBorderColor: "rgba(144,238,144, 0.3)",
+                                        pointBackgroundColor: "#fff",
+                                        pointBorderWidth: 2,
+                                        pointHoverRadius: 5,
+                                        pointHoverBackgroundColor: "rgba(144,238,144, 0.3)",
+                                        pointHoverBorderColor: "rgba(144,238,144,1)",
+                                        pointHoverBorderWidth: 2,
+                                        pointRadius: 1,
+                                        pointHitRadius: 10,
+                                        data: new Array().concat(wlan0SpeedIn),
+                                        spanGaps: false
+                                    },
+                                    {
+                                        label: "wlan0上传网速:" + unit,
+                                        lineTension: 0.3,
+                                        fill: true,
+                                        bezierCurve: true,
+                                        backgroundColor: "rgba(30,144,255, 0.3)",
+                                        borderColor: "rgba(30,144,255, 0.9)",
+                                        borderCapStyle: 'butt',
+                                        borderDash: [],
+                                        borderDashOffset: 0.0,
+                                        borderJoinStyle: 'miter',
+                                        borderWidth: 1,
+                                        pointBorderColor: "rgba(30, 144 ,255, 0.3)",
+                                        pointBackgroundColor: "#fff",
+                                        pointBorderWidth: 2,
+                                        pointHoverRadius: 5,
+                                        pointHoverBackgroundColor: "rgba(30 ,144 ,255, 0.3)",
+                                        pointHoverBorderColor: "rgba(30,144,255, 1)",
+                                        pointHoverBorderWidth: 2,
+                                        pointRadius: 1,
+                                        pointHitRadius: 10,
+                                        data: new Array().concat(wlan0SpeedOut),
+                                        spanGaps: false
+                                    },
+                                    {
+                                        label: "eth0下载网速:" + unit,
+                                        fill: true,
+                                        lineTension: 0.3,
+                                        bezierCurve: true,
+                                        backgroundColor: "rgba(255,218,185, 0.2)",
+                                        borderColor: 'rgba(255,218,185, 0.9)',
+                                        borderCapStyle: 'butt',
+                                        borderDash: [],
+                                        borderDashOffset: 0.0,
+                                        borderJoinStyle: 'miter',
+                                        borderWidth: 2,
+                                        pointBorderColor: "rgba(255,218,185, 0.2)",
+                                        pointBackgroundColor: "#fff",
+                                        pointBorderWidth: 2,
+                                        pointHoverRadius: 5,
+                                        pointHoverBackgroundColor: "rgba(255,218,185, 0.2)",
+                                        pointHoverBorderColor: "rgba(255,218,185,1)",
+                                        pointHoverBorderWidth: 2,
+                                        pointRadius: 1,
+                                        pointHitRadius: 10,
+                                        data: new Array().concat(eth0SpeedIn),
+                                        spanGaps: false
+                                    },
+                                    {
+                                        label: "eth0上传网速:" + unit,
+                                        fill: true,
+                                        lineTension: 0.3,
+                                        bezierCurve: true,
+                                        backgroundColor: "rgba(255,130,71, 0.3)",
+                                        borderColor: "rgba(255,130,71, 0.9)",
+                                        borderCapStyle: 'butt',
+                                        borderDash: [],
+                                        borderDashOffset: 0.0,
+                                        borderJoinStyle: 'miter',
+                                        borderWidth: 2,
+                                        pointBorderColor: "rgba(255,130,71, 0.3)",
+                                        pointBackgroundColor: "#fff",
+                                        pointBorderWidth: 2,
+                                        pointHoverRadius: 5,
+                                        pointHoverBackgroundColor: "rgba(255,130,71, 0.3)",
+                                        pointHoverBorderColor: "rgba(255,130,71, 1)",
+                                        pointHoverBorderWidth: 2,
+                                        pointRadius: 1,
+                                        pointHitRadius: 10,
+                                        data: new Array().concat(eth0SpeedOut),
+                                        spanGaps: false
+                                    }
+                                ]
+                            }
+                        });
+                    }
+
+                    var memTotal = (obj.data[6].data.mem.memTotal + "").replace('kB', '');
+                    var memFree = new Array().concat(obj.data[6].data.mem.memFree);
+                    if (memTotal.length > 6) {
+                        for (i in memFree) {
+                            memFree[i] = (memFree[i] + "").replace('kB', '');
+
+                        }
+                        for (i in memFree) {
+                            memFree[i] = memFree[i] / 1024;
+
+                        }
+                    }
+                    $("#Meminfo").html("<h3>" + parseInt(memFree[9] / (memTotal / 1024) * 100) + "%</h3>")
+
+
+                    var mem = $('#Mem');
+                    var myPieChart = new Chart(mem, {
+                        type: 'doughnut',
+                        options: {
+                            cutoutPercentage: 90,
+                            legend: {
+                                display: false
+                            }
+                        },
+                        data: {
+                            labels: [
+                                "未用",
+                                "已用"
+                            ],
+                            datasets: [{
+                                data: [memFree[9], memTotal / 1024 - memFree[9]],
+                                borderWidth: [0, 0],
+                                backgroundColor: [
+                                    green,
+                                    "#eee"
+                                ],
+                                hoverBackgroundColor: [
+                                    green,
+                                    "#eee"
+                                ]
+                            }]
+                        }
+                    });
+                    var pTemp = new Array(obj.data[0].data.processes.processList, obj.data[1].data.processes.processList, obj.data[2].data.processes.processList, obj.data[3].data.processes.processList, obj.data[4].data.processes.processList, obj.data[5].data.processes.processList, obj.data[6].data.processes.processList);
+                    var i = 0;
+                    setInterval(function () {
+                        if (i <= 6) {
+                            i = setProcess(pTemp, i);
+                        } else {
+                            i = 0;
+                        }
+                    }, 3000);
+
+                } else if (!isEmpty(obj) & obj, status == 10) {
+                    $(location).attr('href', 'index.html');
+                }
+            },
+            dataType: "text"
+        });
+    }
+
+    function getUrlParameter(sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
+    };
+
+    function setProcess(arry, i) {
+        $("#pTbody").html("");
+        for (v in arry[i]) {
+            $("#pTbody").append("<tr>\n" +
+                "                                    <th scope=\"row\">" + v + "</th>\n" +
+                "                                    <td>" + arry[i][v].pName + "</td>\n" +
+                "                                    <td>" + arry[i][v].pid + "</td>\n" +
+                "                                     <td>" + arry[i][v].status + "</td>               \n" +
+                "                                    <td>" + arry[i][v].user + "</td>\n" +
+                "                                    <td>" + arry[i][v].cpuUsage + "%</td>\n" +
+                "                                    <td>" + arry[i][v].memUsage + "%</td>\n" +
+                "                                    <td>" + arry[i][v].time + "</td>\n" +
+                "                                </tr>");
+        }
+        return i + 1;
+    }
+
+    function getMaxNum(ary) {
+        var maxNum = ary[0]
+        for (i = 1, len = ary.length; i < len; i++) {
+            maxNum > ary[i] ? null : maxNum = ary[i];
+        }
+        return maxNum
+    }
+
+</script>
+</body>
+
+</html>

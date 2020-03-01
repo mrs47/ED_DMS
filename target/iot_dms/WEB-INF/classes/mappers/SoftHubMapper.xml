@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mrs47.dao.SoftHubMapper">
+    <resultMap id="softHubMap" type="cn.mrs47.pojo.SoftHub">
+        <id column="sid" property="softId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result column="pid" property="productId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="productname" property="productName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="softname" property="softName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="version" property="version" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="path" property="path" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="host" property="host" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="createtime" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="selectSoftByProductId" parameterType="string" resultMap="softHubMap">
+        select * from softhub where pid=#{productId}
+    </select>
+
+    <select id="checkSoftNameAndVersion" parameterType="map" resultType="integer">
+        select count(1) from softhub where pid=#{productId} and softname=#{softName} and version=#{version}
+    </select>
+    <select id="selectCount" parameterType="string" resultType="integer">
+        select count(1) from softhub where pid in (select product.pid from product where uid=#{userId})
+        <if test="softName != null">
+            and softname like "%"#{softName}"%"
+        </if>
+    </select>
+    <select id="selectAll" parameterType="map" resultMap="softHubMap">
+        select * from softhub where pid in (select product.pid from product where uid=#{userId})
+        <if test="softName != null">
+            and softname like "%"#{softName}"%"
+        </if>
+        order by createtime desc limit #{index},#{many}
+    </select>
+    <select id="selectSoftByFileId" parameterType="map" resultMap="softHubMap">
+        select * from softhub where sid=#{softId} and pid in (select product.pid from product where uid=#{userId})
+    </select>
+    <insert id="insertSoft" parameterType="cn.mrs47.pojo.SoftHub">
+        insert into softhub
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="softId != null">
+                sid,
+            </if>
+            <if test="productId != null">
+                pid,
+            </if>
+            <if test="productName != null">
+                productname,
+            </if>
+            <if test="softName != null">
+                softname,
+            </if>
+            <if test="version != null">
+                version,
+            </if>
+            <if test="path != null">
+                path,
+            </if>
+            <if test="host != null">
+                host,
+            </if>
+            createtime
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="softId != null">
+                #{softId,jdbcType=VARCHAR},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=VARCHAR},
+            </if>
+            <if test="productName != null">
+                #{productName,jdbcType=VARCHAR},
+            </if>
+            <if test="softName != null">
+                #{softName,jdbcType=VARCHAR},
+            </if>
+            <if test="version != null">
+                #{version,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="host != null">
+                #{host,jdbcType=VARCHAR},
+            </if>
+            now()
+        </trim>
+    </insert>
+
+    <delete id="removeSoft" parameterType="map">
+        delete from softhub where sid=#{softId} and pid in (select product.pid from product where product.uid=#{userId})
+    </delete>
+</mapper>

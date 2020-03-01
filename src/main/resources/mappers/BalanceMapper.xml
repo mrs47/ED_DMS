@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mrs47.dao.BalanceMapper">
+    <resultMap id="balanceMap" type="cn.mrs47.pojo.Balance">
+        <id column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result column="uid" property="userId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="balance" property="balance" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <select id="selectBalanceByUserId" parameterType="string" resultType="INTEGER">
+        select balance from balance where uid=#{userId}
+    </select>
+
+    <insert id="insertBalance" parameterType="string" >
+        insert into balance(uid,balance) values(#{userId},10)
+<!--        <trim prefix="(" suffix=")" suffixOverrides=",">-->
+<!--            <if test="id != null">-->
+<!--                id,-->
+<!--            </if>-->
+<!--            <if test="userId != null">-->
+<!--                uid,-->
+<!--            </if>-->
+<!--            balance-->
+<!--        </trim>-->
+<!--        <trim prefix="values (" suffix=")" suffixOverrides=",">-->
+<!--            <if test="id != null">-->
+<!--                #{id,jdbcType=INTEGER},-->
+<!--            </if>-->
+<!--            <if test="userId != null">-->
+<!--                #{userId,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            10-->
+<!--        </trim>-->
+    </insert>
+
+    <update id="updateBalance" parameterType="map">
+        update balance set balance=#{balance} where uid=#{userId}
+    </update>
+</mapper>

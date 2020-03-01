@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet">
+    <!-- Google fonts - Popppins for copy-->
+    <link rel="stylesheet" href="fonts/iconfont.css">
+    <!-- orion icons-->
+    <link rel="stylesheet" href="css/orionicons.css">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/favicon.png">
+    <!-- JavaScript files-->
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1557432_f1au4sax4zc.css">
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper.js/umd/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/jquery.cookie/jquery.cookie.js"></script>
+    <script src="js/js.cookie.min.js"></script>
+    <script src="js/front.js"></script>
+    <script language="javascript" src="js/province.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body onload='getProvince()'>
+<!-- navbar-->
+<header class="header">
+    <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow"><a href="#"
+                                                                      class="sidebar-toggler text-gray-500 mr-4 mr-lg-5 lead"><i
+            class="fas fa-align-left"></i></a><a
+            href="center.html" class="navbar-brand font-weight-bold text-uppercase text-base">设备管理</a>
+        <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
+            <li class="nav-item">
+                <form id="searchForm" class="ml-auto d-none d-lg-block">
+                    <div class="form-group position-relative mb-0">
+                        <button type="submit" style="top: -3px; left: 0;"
+                                class="position-absolute bg-white border-0 p-0"><i
+                                class="o-search-magnify-1 text-gray text-lg"></i></button>
+                        <input type="search" placeholder="搜索 ..."
+                               class="form-control form-control-sm border-0 no-shadow pl-4">
+                    </div>
+                </form>
+            </li>
+            <li class="nav-item dropdown mr-3"><a id="notifications" href="http://example.com" data-toggle="dropdown"
+                                                  aria-haspopup="true" aria-expanded="false"
+                                                  class="nav-link dropdown-toggle text-gray-400 px-1"><i
+                    class="fa fa-bell"></i><span class="notification-icon"></span></a>
+                <div aria-labelledby="notifications" class="dropdown-menu"><a href="#" class="dropdown-item">
+
+                    <div class="d-flex align-items-center">
+                        <div class="icon icon-sm bg-green text-white"><i class="fas fa-envelope"></i></div>
+                        <div class="text ml-2">
+                            <p class="mb-0">你有6条消息</p>
+                        </div>
+                    </div>
+                </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown ml-auto"><a id="userInfo" href="http://example.com" data-toggle="dropdown"
+                                                     aria-haspopup="true" aria-expanded="false"
+                                                     class="nav-link dropdown-toggle"><img src="img/avatar-6.jpg"
+                                                                                           alt="Jason Doe"
+                                                                                           style="max-width: 2.5rem;"
+                                                                                           class="img-fluid rounded-circle shadow"></a>
+                <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong
+                        class="d-block text-uppercase headings-font-family" id="user">用户名</strong></a>
+                    <div class="dropdown-divider"></div>
+                    <a href="personalcenter.html" class="dropdown-item">个人中心</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" onclick="logout()" class="dropdown-item">退出</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+</header>
+<div class="d-flex align-items-stretch">
+    <div id="sidebar" class="sidebar py-3">
+        <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">MAIN
+        </div>
+        <ul class="sidebar-menu list-unstyled">
+            <li class="sidebar-list-item"><a href="center.html" class="sidebar-link text-muted "><i
+                    class="o-home-1 mr-3 text-gray"></i><span>监控中心</span></a></li>
+            <li class="sidebar-list-item"><a href="productManage.html" class="sidebar-link text-muted"><i
+                    class="o-survey-1 mr-3 text-gray"></i><span>产品管理</span></a></li>
+            <li class="sidebar-list-item"><a href="deviceManage.html" class="sidebar-link text-muted active"><i
+                    class="o-imac-screen-1 mr-3 text-gray"></i><span>设备管理</span></a></li>
+            <li class="sidebar-list-item"><a href="#" data-toggle="collapse" data-target="#pages" aria-expanded="false"
+                                             aria-controls="pages" class="sidebar-link text-muted"><i
+                    class="o-wireframe-1 mr-3 text-gray"></i><span>服务</span></a>
+                <div id="pages" class="collapse ">
+                    <ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
+                        <li class="sidebar-list-item"><a href="filehub.html" class="sidebar-link text-muted pl-lg-5 "><i
+                                class="o-survey-1 mr-3 text-gray"></i><span>文件仓库</span></a></li>
+                        <li class="sidebar-list-item"><a href="softhub.html" class="sidebar-link text-muted pl-lg-5"><i
+                                class="o-imac-screen-1 mr-3 text-gray"></i><span>软件仓库</span></a></li>
+
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="page-holder w-100 d-flex flex-wrap">
+        <div class="container-fluid px-xl-5">
+            <section class="py-3">
+                <div class="row ">
+
+                    <div class="col-lg-12 mb-4">
+                        <div class="card">
+                            <div class="card-header ">
+                                <div class="row">
+                                    <h6 class="text-uppercase form-inline mb-0"> 设备列表 </h6>
+                                    <!-- <button type="submit" class="btn btn-primary ml-auto">设备接入</button> -->
+                                    <button type="button" id="addDevice" class="btn btn-primary ml-auto"
+                                            data-toggle="modal"
+                                            data-target="#myModal">设备接入
+                                    </button>
+                                    <!-- 模态框（Modal） -->
+                                    <div class="modal fade" id="myModal" tabindex="-1" data-backdrop="static"
+                                         role="dialog"
+                                         aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="text-base" id="myModalLabel">设备信息</h4>
+                                                </div>
+                                                <!-- Form Elements -->
+                                                <form class="form-horizontal ml-3" id="addForm">
+                                                    <div class="modal-body">
+                                                        <div class="form-group row">
+                                                            <label class="col-md-3 form-control-label py-2">选择产品</label>
+                                                            <div class="col-md-9 select mb-0">
+                                                                <select id="account" class="form-control">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="line"></div>
+                                                        <div class="form-group row">
+                                                            <label class="col-md-3 form-control-label py-2">设备名:</label>
+                                                            <div class="col-md-9">
+                                                                <input type="text" id="deviceName" class="form-control">
+                                                                <small class="form-text text-muted ml-3"
+                                                                       id="deviceNameState">设备名大于3个字符小于12个字符</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="line"></div>
+                                                        <div class="form-group row">
+                                                            <label class="col-md-3  form-control-label py-2">部署地</label>
+                                                            <div class="col-md-9">
+                                                                <div class="row">
+                                                                    <div class="col-md-12 col-lg-4">
+                                                                        <select name="account"
+                                                                                class="form-control"
+                                                                                id="province"
+                                                                                onchange="chooseProvince(this)">
+                                                                            <option value="1">请选择省</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-12 col-lg-4">
+                                                                        <select name="account"
+                                                                                class="form-control" id="city"
+                                                                                onchange="chooseCity(this)">
+                                                                            <option value="1">请选择市</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-12 col-lg-4">
+                                                                        <select name="account"
+                                                                                class="form-control " id="area">
+                                                                            <option value="1">请选择(区)县</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-md-5 col-lg-12 py-3">
+                                                                        <input type="text" id="address"
+                                                                               placeholder="详细地址" class="form-control ">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                        关闭
+                                                    </button>
+                                                    <button type="button" id="sub" class="btn btn-primary"> 提交</button>
+                                                </div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal -->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <input id="inlineFormInput" type="text" placeholder="关键字"
+                                           class="mr-3 form-control col-lg-2 col-md-2">
+                                    <select id="category" class="form-control mr-3 col-lg-2 col-md-2">
+                                        <option selected value="">按状态查询</option>
+                                        <option class="text-success" value="1">在线</option>
+                                        <option class="text-violet" value="0">下线</option>
+                                    </select>
+                                    <button type="button" id="search"
+                                            class="btn btn-outline-primary shadow ml-2 col-lg-1 col-md-2">搜索
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-hover card-text">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>所属产品</th>
+                                        <th>DeviceKey</th>
+                                        <th>设备名</th>
+                                        <th>
+                                            <div class="ml-5">位置</div>
+                                        </th>
+                                        <th>
+                                            <div class="ml-5">添加时间</div>
+                                        </th>
+                                        <th>状态</th>
+                                        <th>
+                                            <div class="ml-5">操作</div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="tBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12">
+                        <h7>每页显示8条</h7>
+                        <nav aria-label="" class="ml-auto">
+                            <ul class="pagination" id="pageNation">
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-left text-primary">
+                        <!-- 版权信息 -->
+                        <p class="mb-2 mb-md-0"></p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var obj = $.cookie("USER");
+        if (isEmpty(obj)) {
+            $(location).attr('href', 'index.html');
+        }else {
+            var userInfo = $.parseJSON(obj);
+            if (!isEmpty(userInfo)){
+                $("#user").html(userInfo.data.userName);
+            }
+        }
+        getPage();
+        $("#search").click(function () {
+            var deviceName = $("#inlineFormInput").val();
+            var status = $("#category").val();
+            getPage(1, deviceName, status);
+        });
+        $("#addDevice").click(getProduct());
+        $("#deviceName").on("input", function () {
+            var deviceName = $("#deviceName").val();
+            if (isEmpty(deviceName) || deviceName.length <= 3 || deviceName.length > 12) {
+                $("#sub").prop("disabled", true);
+                $("#deviceNameState").html("<p style='color:red'>设备名格式有误</p>")
+            } else {
+                $("#sub").prop("disabled", false);
+                $("#deviceNameState").html("<p style='color:green'>设备名可用</p>")
+            }
+        });
+        $("#sub").click(function () {
+            var productId = $("#account").val();
+            var deviceName = $("#deviceName").val();
+            var province = $("#province").val();
+            var city = $("#city").val();
+            var area = $("#area").val();
+            var address = $("#address").val();
+            if (area != 1) {
+                address = area + address;
+            }
+            if (city != 1) {
+                address = city + address;
+            }
+            if (province != 1) {
+                address = province + address;
+            }
+            $.ajax({
+                type: "post",
+                url: "device/addDevice.do",
+                data: {"deviceName": deviceName, "productId": productId, "address": address},
+                success: function (data) {
+                    var obj = eval(data);
+                    if (obj.status == 1) {
+                        $("#sub").prop("disabled", true);
+                        $("#addForm").html("<div class='modal-body m-auto col-12'><h2 class='m-auto'>添加成功<i class='iconfont iconchenggong1 ml-2' style='color:green'></div></i></h2>");
+                    } else if (obj.status == 10) {
+                        $(location).attr('href', 'index.html');
+                    } else {
+                        $("#sub").prop("disabled", true);
+                        $("#addForm").html("<div class='modal-body m-auto col-12'><h2 class='m-auto'>添加失败<i class='iconfont iconcha m-auto' style='color:red'></i></h2>");
+                    }
+                }
+            });
+        });
+    });
+
+    function getProduct() {
+        $.ajax({
+            type: "post",
+            url: "product/selectAll.do",
+            success: function (data) {
+                var pageInfo = $.parseJSON(data);
+                $("#account").html("");
+                if (pageInfo.status == 1) {
+                    for (i = 0; i < pageInfo.data.data.length; i++) {
+                        if (!isEmpty(pageInfo.data.data[i])) {
+                            $("#account").append("<option value=\"" + pageInfo.data.data[i].productId + "\" >" + pageInfo.data.data[i].productName + "</option>");
+                        }
+                    }
+                } else if (obj.status == 10) {
+                    $(location).attr('href', 'index.html');
+                }
+            },
+            dataType: "text"
+        });
+    }
+
+    function getPage(page, name, status) {
+        var productId = getUrlParameter('productId');
+        if (isEmpty(productId)) {
+            $.ajax({
+                type: "post",
+                data: {"page": page, "deviceName": name, "status": status},
+                url: "device/selectAll.do",
+                success: function (data) {
+                    var obj = $.parseJSON(data);
+                    $("#tBody").html("");
+                    $("#pageNation").html("");
+                    if (obj.status == 1 && !isEmpty(obj.data)) {
+                        for (i = 0; i < obj.data.every; i++) {
+                            if (!isEmpty(obj.data.data[i])) {
+                                if (obj.data.data[i].status == 1) {
+                                    $("#tBody").append("<tr>\n" +
+                                        "                  <th scope=\"row\">" + (i + 1) + "</th>\n" +
+                                        "                          <td>" + obj.data.data[i].productName + "</td>\n" +
+                                        "                          <td>" + obj.data.data[i].deviceKey + "</td>\n" +
+                                        "                          <td>" + obj.data.data[i].deviceName + "</td>\n" +
+                                        "                  <th>\n" +
+                                        "                  <div class=\"ml-3\">" + obj.data.data[i].address + "</div>\n" +
+                                        "                          </th>\n" +
+                                        "                          <td>\n" +
+                                        "                          <div class=\"ml-5\">" + obj.data.data[i].createTime + "</div>\n" +
+                                        "                          </td>\n" +
+                                        "                          <td>\n" +
+                                        "                          <div class=\"dot ml-2 bg-green\"></div>\n" +
+                                        "                          </td>\n" +
+                                        "                          <td><a href=\"deviceinfo.html?deviceId=" + obj.data.data[i].deviceId + "\" class=\"ml-2\">查看</a>&nbsp<a href=\"#\"  onclick='delDevice(\"" + obj.data.data[i].deviceId + "\")'>删除</a></td>\n" +
+                                        "                  </tr>");
+                                } else if (obj.data.data[i].status == 0) {
+                                    $("#tBody").append("<tr>\n" +
+                                        "                  <th scope=\"row\">" + (i + 1) + "</th>\n" +
+                                        "                          <td>" + obj.data.data[i].productName + "</td>\n" +
+                                        "                          <td>" + obj.data.data[i].deviceKey + "</td>\n" +
+                                        "                          <td>" + obj.data.data[i].deviceName + "</td>\n" +
+                                        "                  <th>\n" +
+                                        "                  <div class=\"ml-3\">" + obj.data.data[i].address + "</div>\n" +
+                                        "                          </th>\n" +
+                                        "                          <td>\n" +
+                                        "                          <div class=\"ml-5\">" + obj.data.data[i].createTime + "</div>\n" +
+                                        "                          </td>\n" +
+                                        "                          <td>\n" +
+                                        "                          <div class=\"dot ml-2 bg-red\"></div>\n" +
+                                        "                          </td>\n" +
+                                        "                          <td><a href=\"deviceinfo.html?deviceId=" + obj.data.data[i].deviceId + "\" class=\"ml-2\">查看</a>&nbsp<a href=\"#\"  onclick='delDevice(\"" + obj.data.data[i].deviceId + "\")'>删除</a></td>\n" +
+                                        "                  </tr>");
+                                }
+                            }
+                        }
+
+                        $("#pageNation").append("<li class=\"page-item\"><a class=\"page-link\" href=\"#\" onclick=\"getPage()\">首页</a></li>");
+                        $("#pageNation").append("<li class=\"page-item\"><a class=\"page-link\" href=\"#\"  onclick='getPage(" + obj.data.previousPage + ")' aria-label=\"Previous\">\n" +
+                            "                                    <span aria-hidden=\"true\">&laquo;</span>\n" +
+                            "                                    <span class=\"sr-only\">上一页</span>\n" +
+                            "                                </a></li>");
+                        for (i = 1; i <= obj.data.totalPage; i++) {
+                            $("#pageNation").append(" <li class=\"page-item\"><a class=\"page-link\" href=\"#\" onclick='getPage(" + i + ")' >" + i + "</a></li>");
+                        }
+                        $("#pageNation").append("<li class=\"page-item\"><a class=\"page-link\" href=\"#\"  onclick='getPage(" + obj.data.nextPage + ")' aria-label=\"Next\">\n" +
+                            "                                    <span aria-hidden=\"true\">&raquo;</span>\n" +
+                            "                                    <span class=\"sr-only\">下一页</span>\n" +
+                            "                                </a></li>");
+                        $("#pageNation").append("<li class=\"page-item\"><a class=\"page-link\" href=\"#\"  onclick='getPage(" + obj.data.endPage + ")'>末页</a></li>");
+
+                    } else if (obj.status == 10) {
+                        $(location).attr('href', 'index.html');
+                    }
+                },
+                dataType: "text"
+            });
+        } else {
+            $.ajax({
+                type: "post",
+                data: {"productId": productId, "page": page, "deviceName": name, "status": status},
+                url: "device/selectAllByProduct.do",
+                success: function (data) {
+                    var obj = $.parseJSON(data);
+                    $("#tBody").html("");
+                    $("#pageNation").html("");
+                    if (obj.status == 1 && !isEmpty(obj.data)) {
+                        for (i = 0; i < obj.data.every; i++) {
+                            if (!isEmpty(obj.data.data[i])) {
+                                if (obj.data.data[i].status == 1) {
+                                    $("#tBody").append("<tr>\n" +
+                                        "                  <th scope=\"row\">" + (i + 1) + "</th>\n" +
+                                        "                          <td>" + obj.data.data[i].productName + "</td>\n" +
+                                        "                          <td>" + obj.data.data[i].deviceKey + "</td>\n" +
+                                        "                          <td>" + obj.data.data[i].deviceName + "</td>\n" +
+                                        "                  <th>\n" +
+                                        "                  <div class=\"ml-3\">" + obj.data.data[i].address + "</div>\n" +
+                                        "                          </th>\n" +
+                                        "                          <td>\n" +
+                                        "                          <div class=\"ml-5\">" + obj.data.data[i].createTime + "</div>\n" +
+                                        "                          </td>\n" +
+                                        "                          <td>\n" +
+                                        "                          <div class=\"dot ml-2 bg-green\"></div>\n" +
+                                        "                          </td>\n" +
+                                        "                          <td><a href=\"deviceinfo.html?deviceId=" + obj.data.data[i].deviceId + "\" class=\"ml-2\">查看</a>&nbsp<a href=\"#\"  onclick='delDevice(\"" + obj.data.data[i].deviceId + "\")'>删除</a></td>\n" +
+                                        "                  </tr>");
+                                } else if (obj.data.data[i].status == 0) {
+
+                                    $("#tBody").append("<tr>\n" +
+                                        "                  <th scope=\"row\">" + (i + 1) + "</th>\n" +
+                                        "                          <td>" + obj.data.data[i].productName + "</td>\n" +
+                                        "                          <td>" + obj.data.data[i].deviceKey + "</td>\n" +
+                                        "                          <td>" + obj.data.data[i].deviceName + "</td>\n" +
+                                        "                  <th>\n" +
+                                        "                  <div class=\"ml-3\">" + obj.data.data[i].address + "</div>\n" +
+                                        "                          </th>\n" +
+                                        "                          <td>\n" +
+                                        "                          <div class=\"ml-5\">" + obj.data.data[i].createTime + "</div>\n" +
+                                        "                          </td>\n" +
+                                        "                          <td>\n" +
+                                        "                          <div class=\"dot ml-2 bg-red\"></div>\n" +
+                                        "                          </td>\n" +
+                                        "                          <td><a href=\"deviceinfo.html?deviceId=" + obj.data.data[i].deviceId + "\" class=\"ml-2\">查看</a>&nbsp<a href=\"#\"  onclick='delDevice(\"" + obj.data.data[i].deviceId + "\")'>删除</a></td>\n" +
+                                        "                  </tr>");
+
+                                }
+                            }
+                        }
+                        $("#pageNation").append("<li class=\"page-item\"><a class=\"page-link\" href=\"#\" onclick=\"getPage()\">首页</a></li>");
+                        $("#pageNation").append("<li class=\"page-item\"><a class=\"page-link\" href=\"#\"  onclick='getPage(" + obj.data.previousPage + ")' aria-label=\"Previous\">\n" +
+                            "                                    <span aria-hidden=\"true\">&laquo;</span>\n" +
+                            "                                    <span class=\"sr-only\">上一页</span>\n" +
+                            "                                </a></li>");
+                        for (i = 1; i <= obj.data.totalPage; i++) {
+                            $("#pageNation").append(" <li class=\"page-item\"><a class=\"page-link\" href=\"#\" onclick='getPage(" + i + ")' >" + i + "</a></li>");
+                        }
+                        $("#pageNation").append("<li class=\"page-item\"><a class=\"page-link\" href=\"#\"  onclick='getPage(" + obj.data.nextPage + ")' aria-label=\"Next\">\n" +
+                            "                                    <span aria-hidden=\"true\">&raquo;</span>\n" +
+                            "                                    <span class=\"sr-only\">下一页</span>\n" +
+                            "                                </a></li>");
+                        $("#pageNation").append("<li class=\"page-item\"><a class=\"page-link\" href=\"#\"  onclick='getPage(" + obj.data.endPage + ")'>末页</a></li>");
+
+                    } else if (obj.status == 10) {
+                        $(location).attr('href', 'index.html');
+                    }
+                },
+                dataType: "text"
+            });
+        }
+    }
+
+    function getUrlParameter(sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
+    };
+
+    function delDevice(id) {
+        $.ajax({
+            type: "post",
+            url: "device/removeDevice.do",
+            data: {"deviceId": id},
+            success: function (data) {
+                var obj = $.parseJSON(data);
+                if (obj.status == 1) {
+                    alert("删除成功！");
+                    getPage();
+                } else if (obj.status == 10) {
+                    $(location).attr('href', 'index.html');
+                } else {
+                    alert("删除失败！");
+                    getPage();
+                }
+            },
+            dataType: "text"
+        });
+    }
+
+    function isEmpty(obj) {
+        if (typeof obj == "undefined" || obj == null || obj == "") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function logout() {
+        $.ajax({
+            type: "post",
+            url: "user/logout.do",
+            success: function (data) {
+                var obj = $.parseJSON(data)
+                if(!isEmpty(obj) && obj.status==1){
+                    $.cookie("USER",null);
+                    $(location).attr('href','index.html');
+                }
+            },
+            dataType: "text"
+        });
+        $.cookie("USER",null);
+        $(location).attr('href','index.html');
+    }
+</script>
+</body>
+
+</html>

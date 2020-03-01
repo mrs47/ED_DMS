@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mrs47.dao.ProductMapper">
+    <resultMap id="productMap" type="cn.mrs47.pojo.Product">
+        <id column="pid" property="productId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="id" property="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result column="uid" property="userId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="productname" property="productName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="cid" property="categoryId" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="productkey" property="productKey" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="token" property="token" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="createtime" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+    <select id="selectProductKeyByProductId" parameterType="map" resultType="string">
+         select productkey from product where uid=#{userId} and pid=#{productId}
+    </select>
+
+    <select id="checkProductId" parameterType="map" resultType="integer">
+      select count(1) from product where uid=#{userId} and pid=#{productId}
+    </select>
+
+    <select id="selectProductNameById" parameterType="string" resultType="string">
+        select productname from product where pid=#{productId}
+    </select>
+    <select id="selectTokenByProductKey" parameterType="string" resultType="string">
+        select token from product where productKey=#{productKey}
+    </select>
+    <select id="checkProductName" parameterType="map" resultType="integer">
+        select count(1) from product where uid=#{userId} and productname=#{productName}
+    </select>
+    <select id="selectAll" parameterType="map" resultMap="productMap">
+        select * from product where uid=#{userId}
+        <if test="productName != null">
+            and productname like "%"#{productName}"%"
+        </if>
+        order by createtime desc limit #{index},#{many}
+    </select>
+    <select id="checkProductEmpty" parameterType="string" resultType="integer">
+        select count(1) from device where pid=#{productId}
+    </select>
+    <select id="selectCount" parameterType="string" resultType="integer">
+        select count(1) from product where uid=#{userId}
+        <if test="productName != null">
+            and productname like "%"#{productName}"%"
+        </if>
+    </select>
+
+    <insert id="insertProduct" parameterType="cn.mrs47.pojo.Product">
+        insert into product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="productId != null">
+                pid,
+            </if>
+            <if test="userId != null">
+                uid,
+            </if>
+            <if test="productName != null">
+                productname,
+            </if>
+            <if test="categoryId != null">
+                cid,
+            </if>
+            <if test="productKey != null">
+                productkey,
+            </if>
+            <if test="token != null">
+                token,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            createtime
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="productName != null">
+                #{productName,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryId != null">
+                #{categoryId,jdbcType=VARCHAR},
+            </if>
+            <if test="productKey != null">
+                #{productKey,jdbcType=VARCHAR},
+            </if>
+            <if test="token != null">
+                #{token,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            now()
+        </trim>
+    </insert>
+    <delete id="removeProductByProductId" parameterType="map">
+        delete from product where uid=#{userId} and pid=#{productId}
+    </delete>
+</mapper>

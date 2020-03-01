@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <!-- Bootstrap CSS-->
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome CSS-->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="fonts/iconfont.css">
+  <!-- orion icons-->
+  <link rel="stylesheet" href="css/orionicons.css">
+  <!-- theme stylesheet-->
+  <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+  <!-- Custom stylesheet - for your changes-->
+  <link rel="stylesheet" href="css/custom.css">
+  <!-- Favicon-->
+  <link rel="shortcut icon" href="img/favicon.png">
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1557432_f1au4sax4zc.css">
+  <!-- JavaScript files-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/popper.js/umd/popper.min.js"> </script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+  <script src="js/js.cookie.min.js"></script>
+  <script src="js/front.js"></script>
+</head>
+
+<body>
+  <div class="page-holder d-flex align-items-center">
+    <div class="container">
+      <div class="row align-items-center py-5">
+        <div class="col-5 col-lg-7 mx-auto mb-5 mb-lg-0">
+          <!-- 待修改 -->
+          <div class="pr-lg-5"><img src="img/illustration.svg" alt="" class="img-fluid"></div>
+        </div>
+        <div class="col-lg-5 px-lg-4">
+          <h1 class="text-base text-primary text-uppercase mb-4">嵌入式管理系统</h1>
+          <h2 class="mb-4">欢 迎 登 录!</h2>
+          <p class="text-muted">欢迎欢迎 热烈欢迎.</p>
+          <form id="loginForm"class="mt-4">
+            <div class="form-group mb-4">
+              <div  class="form-inline">
+              <input type="text" id="loginusername" placeholder="邮箱地址"
+                class="form-control border-0 shadow form-control-lg">
+                <div id="lusername" class="ml-2"></div>
+              </div>
+
+            </div>
+            <div class="form-group mb-4">
+              <div  class="form-inline">
+              <input type="password" id="loginpassoword" placeholder="密码"
+                class="form-control border-0 shadow form-control-lg text-violet">
+                <div id="lpassword" class="ml-2"></div>
+              </div>
+
+            </div>
+            <div class="form-group mb-4">
+              <div class="custom-control custom-checkbox">
+                <input id="customCheck1" type="checkbox" checked class="custom-control-input">
+                <label for="customCheck1" class="custom-control-label">记住账号</label>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary shadow px-5" id="login">登录</button> &nbsp;&nbsp;
+            <button type="button" data-toggle="modal" data-target="#modal-register"
+              class="btn btn-outline-primary shadow px-5">注册</button>
+          </form>
+          <div class=" ">
+            <label><a href="#"  style="vertical-align: inherit;" class="forgot" data-toggle="modal" data-target="#forgotPassword">忘记密码?</a></label>
+          </div>
+        </div>
+      </div>
+      <!-- 模态框（Modal） -->
+      <div class="modal fade" id="forgotPassword" tabindex="-1" data-backdrop="static" role="dialog"
+           aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="text-base">忘记密码</h4>
+            </div>
+            <form  id="formBody">
+              <div class="modal-body ">
+                <div class="form-group row">
+                  <div class="col-lg-4 py-2">邮箱：</div>
+                  <input type="email" id="forgotEmail" placeholder="注册的邮箱"
+                         class="form-last-name form-control col-lg-5" >
+                  <div id="emailState" class="ml-2"></div>
+                </div>
+
+                <div class="form-group row py-2">
+                  <div class="input-group mb-3">
+                    <div class="col-lg-4 py-2">验证码：</div>
+                    <input type="text" id="vCode" placeholder="验证码"
+                           class="form-control col-lg-4">
+                    <div class="input-group-append ">
+                      <button id="sendCode" type="button" class="btn btn-primary "
+                              onclick="settime()">发送验证码
+                      </button>
+                      <div id="codeState">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-lg-4 py-2">密码：</div>
+                  <input type="password" id="passwd1" placeholder="密码(六位以上)"
+                         class="form-last-name form-control col-lg-5" id="passwd1">
+                  <div id="p1State"></div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-lg-4 py-2">再次输入密码：</div>
+                  <input type="password" id="passwd2" placeholder="重复密码(六位以上)"
+                         class="form-last-name form-control col-lg-5" id="passwd2">
+                  <div id="p2State">
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+              </button>
+              <button type="button" id="forgotSub" disabled class="btn btn-primary">
+                提交更改
+              </button>
+            </div>
+
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+      </div>
+      <!-- MODAL -->
+      <div class="modal fade" id="modal-register" tabindex="-1" role="dialog" aria-labelledby="modal-register-label"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="">注册</h3>
+              <button type="button" class="close" data-dismiss="modal">
+                <img src="img/close.png" style="max-width: 1rem;" alt="关闭">
+              </button>
+            </div>
+            <div class="modal-body" id="registerBody">
+              <form>
+                <div class="form-group">
+                  <div  class="form-inline">
+                  <input type="text" name="userName" placeholder="账号名(5个字符以上)" class="form-first-name form-control col-11"
+                    id="username">
+                    <div id="usernameInfo" class="ml-2"></div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div  class="form-inline">
+                  <input type="password" name="password" placeholder="密码(六位以上)" class="form-last-name form-control col-11"
+                    id="password">
+                    <div id="passwordInfo" class="ml-2"></div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div  class="form-inline">
+                  <input type="password" name="password2" placeholder="重复密码(六位以上)" class="form-last-name form-control col-11"
+                    id="password2">
+                    <div id="password2Info" class="ml-2"></div>
+                  </div>
+                </div>
+                <div class="form-group" >
+                  <div  class="form-inline">
+                    <input type="email" name="email" placeholder="邮箱" class="form-email form-control col-11" id="email">
+                    <div id="emailInfo" class="ml-2"></div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-primary col-lg-12" id="register" disabled >提交</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    $(function () {
+      $("#login").click(function () {
+        var email = $("#loginusername").val();
+        var password = $("#loginpassoword").val();
+        if ( isEmpty(email) ){
+          $("#lpassword").html("");
+          $("#lusername").html("<i class='iconfont iconcha' style='color:red'></i>");
+        }else if (isEmpty(password)){
+          $("#lusername").html("");
+          $("#lpassword").html("<i class='iconfont iconcha' style='color:red'></i>");
+        }else {
+          $("#lusername").html("");
+          $("#lpassword").html("");
+          $("#login").prop("disabled",true);
+          $.ajax({
+            type: "post",
+            url: "user/login.do",
+            data: {"email":email,"password": password},
+            success: function (data) {
+              var obj = $.parseJSON(data);
+              if (obj.status == 1){
+                $("#login").prop("disabled",true);
+                $.cookie("USER",data);
+                $(location).attr('href', 'center.html');
+              }else {
+                $("#login").prop("disabled",false);
+                alert(obj.msg);
+              }
+            },
+            dataType: "text"
+          });
+        }
+      });
+
+      $("#register").click(function () {
+        var email = $("#email").val();
+        var userName = $("#username").val();
+        var password = $("#password").val();
+        if ( isEmpty(email) || isEmpty(userName) || isEmpty(password) || isEmpty($("#password2").val())){
+          $("#register").prop("disabled",true);
+        }else {
+          $("#register").prop("disabled",true);
+          $.ajax({
+            type: "post",
+            url: "user/register.do",
+            data: {"userName":userName,"email":email,"password": password},
+            success: function (data) {
+              var obj = $.parseJSON(data);
+              if (obj.status == 1){
+                $("#register").prop("disabled",true);
+                $("#registerBody").html("<div class='modal-body m-auto col-12'><h2 class='m-auto'>"+obj.msg+"<i class='iconfont iconchenggong1 ml-2' style='color:green'></div></i></h2>");
+              }else {
+                $("#registerBody").html("<div class='modal-body m-auto'><h2>"+obj.msg+"<i class='iconfont iconcha m-auto' style='color:red'></i></h2>");
+              }
+            },
+            dataType: "text"
+          });
+        }
+      });
+
+      $("#email").on("input",function () {
+        var email = this.value;
+        if (isEmail($("#email"))){
+          $.ajax({
+            type: "post",
+            url: "user/checkEmail.do",
+            data: {"email":email},
+            success: function (data) {
+              var obj = $.parseJSON(data);
+              if (obj.status == 1){
+                $("#emailInfo").html("<i class='iconfont iconduigou' style='color:green'></i>");
+                $("#register").prop("disabled",false);
+              }else {
+                $("#emailInfo").html("<i class='iconfont iconcha' style='color:red'></i>");
+                $("#register").prop("disabled",true);
+              }
+            },
+            dataType: "text"
+          });
+        }else {
+          $("#emailInfo").html("<i class='iconfont iconcha' style='color:red'></i>");
+          $("#register").prop("disabled",true);
+        }
+    });
+
+      $("#forgotEmail").on("input",function () {
+        var email = this.value;
+        if (isEmail($("#forgotEmail"))){
+          $.ajax({
+            type: "post",
+            url: "user/checkEmail.do",
+            data: {"email":email},
+            success: function (data) {
+              var obj = $.parseJSON(data);
+              if (obj.status == 0){
+                $("#emailState").html("<i class='iconfont iconduigou' style='color:green'></i>");
+                $("#forgotSub").prop("disabled",false);
+              }else {
+                $("#emailState").html("<i class='iconfont iconcha' style='color:red'></i>");
+                $("#forgotSub").prop("disabled",true);
+              }
+            },
+            dataType: "text"
+          });
+        }else {
+          $("#emailState").html("<i class='iconfont iconcha' style='color:red'></i>");
+          $("#forgotSub").prop("disabled",true);
+        }
+      });
+
+      $("#username").on("input",function () {
+        var username = this.value;
+        if (username.length > 5){
+          $("#usernameInfo").html("<i class='iconfont iconduigou' style='color:green'></i>");
+          $("#register").prop("disabled",false);
+        }else {
+          $("#usernameInfo").html("<i class='iconfont iconcha' style='color:red'></i>");
+          $("#register").prop("disabled",true);
+        }
+      });
+
+      $("#password").on("input",function () {
+        var password = this.value;
+        if (password.length > 6){
+          $("#passwordInfo").html("<i class='iconfont iconduigou' style='color:green'></i>");
+          $("#register").prop("disabled",false);
+        }else {
+          $("#passwordInfo").html("<i class='iconfont iconcha' style='color:red'></i>");
+          $("#register").prop("disabled",true);
+        }
+      });
+
+      $("#password2").on("input",function () {
+        var password =  $("#password").val()
+        var password2 =  this.value;
+        if (password == password2 && password2.length > 6 ){
+          $("#password2Info").html("<i class='iconfont iconduigou' style='color:green'></i>");
+          $("#register").prop("disabled",false);
+        }else {
+          $("#password2Info").html("<i class='iconfont iconcha' style='color:red'></i>");
+          $("#register").prop("disabled",true);
+        }
+      });
+
+
+      $("#sendCode").click(function () {
+        var email = $("#forgotEmail").val();
+        $.ajax({
+          type: "post",
+          url: "user/sendCode.do",
+          data: {"email":email},
+        })
+      });
+
+      $("#passwd1").on("input",function () {
+        var password = $("#passwd1").val();
+        if ( password.length <= 6 || password.length >= 32){
+          $("#forgotSub").prop("disabled", true);
+          $("#p1State").html("<i class='iconfont iconcha ml-2' style='color:red'></i>")
+        }else {
+          $("#forgotSub").prop("disabled", false);
+          $("#p1State").html("<i class='iconfont iconchenggong1 ml-2' style='color:green'></i>");
+        }
+      });
+
+      $("#passwd2").on("input",function () {
+        var password = $("#passwd2").val();
+        if ( password.length <= 6 || password.length >= 32 || password!=$("#passwd2").val()){
+          $("#forgotSub").prop("disabled", true);
+          $("#p2State").html("<i class='iconfont iconcha ml-2' style='color:red'></i>")
+        }else {
+          $("#forgotSub").prop("disabled", false);
+          $("#p2State").html("<i class='iconfont iconchenggong1 ml-2' style='color:green'></i>")
+        }
+      });
+
+      $("#vCode").on("input",function () {
+        var code = $("#vCode").val();
+        if ( code.length != 6 ){
+          $("#forgotSub").prop("disabled", true);
+          $("#codeState").html("<i class='iconfont iconcha ml-2' style='color:red'></i>")
+        }else {
+          $("#forgotSub").prop("disabled", false);
+          $("#codeState").html("<i class='iconfont iconchenggong1 ml-2' style='color:green'></i>")
+        }
+      });
+
+
+      $("#forgotSub").click(function () {
+        var email = $("#forgotEmail").val();
+        var code = $("#vCode").val();
+        var p1 =  $("#passwd1").val();
+        var p2 =  $("#passwd2").val()
+        if ( isEmpty(code)|| isEmpty(p1) || isEmpty(p2) || isEmpty(email)){
+          $("#forgotSub").prop("disabled", true);
+          alert("请检查参数");
+        }else {
+          $.ajax({
+            type: "post",
+            url: "user/forgetPassword.do",
+            data: {"email":email,"password":p1,"code":code},
+            success:function (data) {
+              var obj = $.parseJSON(data);
+              if (obj.status == 1){
+                $("#forgotSub").prop("disabled",true);
+                $("#formBody").html("<div class='modal-body m-auto col-12'><h2 class='m-auto'>"+obj.msg+"<i class='iconfont iconchenggong1 ml-2' style='color:green'></div></i></h2>");
+              }else if (obj.status==10){
+                $(location).attr('href', 'index.html');
+              }else {
+                $("#forgotSub").prop("disabled",true);
+                $("#formBody").html("<div class='modal-body m-auto col-12'><h2 class='m-auto'>"+obj.msg+"<i class='iconfont iconcha m-auto' style='color:red'></i></h2>");
+              }
+            },
+            dataType: "text"
+          });
+        }
+      });
+
+    });
+    function isEmpty(obj){
+      if(typeof obj == "undefined" || obj == null || obj == ""){
+        return true;
+      }else{
+        return false;
+      }
+    }
+
+    function isEmail(obj){
+      var reg1 = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)/;
+      if( reg1.test(obj.val()) == false ) {
+        return false;
+      }
+      return true;
+    }
+    var countdown = 60;
+    function settime() {
+      if (countdown == 0) {
+        $("#sendCode").prop("disabled", false);
+        $("#sendCode").html("获取验证码");
+        countdown = 60;
+        return;
+      } else {
+        $("#sendCode").prop("disabled", true);
+        $("#sendCode").html("重新发送(" + countdown + ")");
+        countdown--;
+      }
+      setTimeout(function () {
+                settime()
+              }
+              , 1000)
+    }
+  </script>
+</body>
+</html>
